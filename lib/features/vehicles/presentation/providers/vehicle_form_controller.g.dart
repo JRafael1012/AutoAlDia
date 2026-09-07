@@ -54,7 +54,7 @@ final class VehicleFormControllerProvider
 }
 
 String _$vehicleFormControllerHash() =>
-    r'65176ca2cb8bb0d1fb57528af566184d843e88f5';
+    r'e77a3053aea040c8b0f3f97af86aafe2a46f0db0';
 
 /// Controlador del formulario de vehículo (crear y editar).
 ///

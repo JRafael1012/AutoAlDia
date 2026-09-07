@@ -15,7 +15,7 @@ El punto flotante (`double`) introduce errores de redondeo acumulados en operaci
 
 - Tablas Drift: columnas de monto con `integer()`.
 - Modelos de dominio: campos `int`.
-- Ejemplos de columnas afectadas: `total_cost`, `unit_price`, `amount`, `cost`, `premium`.
+- Ejemplos de columnas afectadas: `total_cost`, `unit_price`, `amount`, `cost`, `premium`, `purchase_value`, `current_estimated_value`.
 
 ## Conversión para mostrar
 

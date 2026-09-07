@@ -1,5 +1,7 @@
 import 'package:drift/drift.dart';
 
+import '../../../features/auth/data/tables/users_table.dart';
+
 /// Bitácora de auditoría de acciones del usuario (created/updated/deleted).
 ///
 /// Tabla transversal: registra eventos de cualquier módulo. La referencia a la
@@ -8,6 +10,8 @@ import 'package:drift/drift.dart';
 @TableIndex(name: 'activity_logs_created_idx', columns: {#createdAt})
 class ActivityLogs extends Table {
   IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get userId => integer().references(Users, #id, onDelete: KeyAction.cascade)();
 
   /// created | updated | deleted.
   TextColumn get action => text().withLength(min: 1, max: 20)();

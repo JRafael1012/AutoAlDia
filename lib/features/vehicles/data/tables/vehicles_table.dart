@@ -37,6 +37,30 @@ class Vehicles extends Table {
   /// Vehículo seleccionado por el usuario (para módulos como combustible/gastos).
   BoolColumn get isActive => boolean().withDefault(const Constant(false))();
 
+  /// Capacidad del tanque en litros (opcional).
+  RealColumn get tankCapacity => real().nullable()();
+
+  /// Fecha de adquisición del vehículo (opcional).
+  DateTimeColumn get acquisitionDate => dateTime().nullable()();
+
+  /// Decisión: monto como entero (unidad mínima de la moneda).
+  IntColumn get purchaseValue => integer().nullable()();
+
+  /// Decisión: monto como entero (unidad mínima de la moneda).
+  IntColumn get currentEstimatedValue => integer().nullable()();
+
+  /// Color del vehículo (opcional).
+  TextColumn get color => text().withLength(min: 1, max: 40).nullable()();
+
+  /// Número de identificación vehicular (VIN) (opcional).
+  TextColumn get vin => text().withLength(min: 1, max: 30).nullable()();
+
+  /// carro | moto | camioneta | otro. TEXT libre validado por la UI.
+  TextColumn get vehicleType => text().withLength(min: 1, max: 30).nullable()();
+
+  /// Observaciones o notas libres (opcional).
+  TextColumn get observations => text().withLength(min: 1, max: 500).nullable()();
+
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();

@@ -21,5 +21,8 @@ class Attachments extends Table {
 
   TextColumn get mimeType => text().nullable()();
 
+  /// Tamaño del archivo en bytes.
+  IntColumn get sizeBytes => integer()();
+
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 }

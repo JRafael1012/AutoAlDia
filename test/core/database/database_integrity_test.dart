@@ -1,5 +1,5 @@
 import 'package:autoaldia/core/database/app_database.dart';
-import 'package:drift/drift.dart';
+import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -118,6 +118,43 @@ void main() {
 
       final inserted = await (db.select(db.expenses)..where((e) => e.vehicleId.equals(vehicleId))).getSingle();
       expect(inserted.amount, expenseAmount);
+    });
+  test('maintenance.type_id se pone en NULL al borrar el tipo (SET NULL)', () async {
+      final userId = await db.into(db.users).insert(
+            UsersCompanion.insert(name: 'Ana'),
+          );
+
+      final vehicleId = await db.into(db.vehicles).insert(
+            VehiclesCompanion.insert(
+              userId: userId,
+              brand: 'Toyota',
+              model: 'Corolla',
+              odometerKm: 10000,
+              fuelType: 'gasolina',
+            ),
+          );
+
+      final typeId = await db.into(db.maintenanceTypes).insert(
+            MaintenanceTypesCompanion.insert(name: 'Cambio de aceite'),
+          );
+
+      final maintenanceId = await db.into(db.maintenance).insert(
+            MaintenanceCompanion.insert(
+              vehicleId: vehicleId,
+              typeId: Value(typeId),
+              date: DateTime.now(),
+              title: 'Cambio de aceite sintético',
+              cost: 120000,
+            ),
+          );
+
+      // Eliminar el tipo del catálogo: el historial NO debe borrarse.
+      await (db.delete(db.maintenanceTypes)..where((t) => t.id.equals(typeId))).go();
+
+      final row =
+          await (db.select(db.maintenance)..where((m) => m.id.equals(maintenanceId))).getSingle();
+      expect(row.typeId, isNull);
+      expect(row.title, 'Cambio de aceite sintético');
     });
   });
 }

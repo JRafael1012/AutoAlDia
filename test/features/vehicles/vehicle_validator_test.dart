@@ -37,5 +37,60 @@ void main() {
       expect(validator.validateFuelType('electrico'), isNull);
       expect(validator.validateFuelType('hibrido'), isNull);
     });
+
+    test('validateTankCapacity rechaza no numérico o <= 0', () {
+      expect(validator.validateTankCapacity('abc'), isNotNull);
+      expect(validator.validateTankCapacity('0'), isNotNull);
+      expect(validator.validateTankCapacity('-5'), isNotNull);
+      expect(validator.validateTankCapacity('45.5'), isNull);
+      expect(validator.validateTankCapacity(''), isNull); // Opcional
+    });
+
+    test('validateAcquisitionDate rechaza inválidas o futuras', () {
+      expect(validator.validateAcquisitionDate('no-fecha'), isNotNull);
+      expect(
+        validator.validateAcquisitionDate(
+          DateTime.now().add(const Duration(days: 1)).toIso8601String(),
+        ),
+        isNotNull,
+      );
+      expect(validator.validateAcquisitionDate('2023-05-01'), isNull);
+      expect(validator.validateAcquisitionDate(''), isNull); // Opcional
+    });
+
+    test('validatePurchaseValue y validateCurrentEstimatedValue validan montos enteros', () {
+      expect(validator.validatePurchaseValue('abc'), isNotNull);
+      expect(validator.validatePurchaseValue('-100'), isNotNull);
+      expect(validator.validatePurchaseValue('45000000'), isNull);
+      expect(validator.validatePurchaseValue(''), isNull); // Opcional
+      expect(validator.validateCurrentEstimatedValue('42000000'), isNull);
+      expect(validator.validateCurrentEstimatedValue('12.5'), isNotNull);
+    });
+
+    test('validateColor rechaza colores demasiado largos', () {
+      expect(validator.validateColor('R' * 41), isNotNull);
+      expect(validator.validateColor('Rojo oscuro'), isNull);
+      expect(validator.validateColor(''), isNull); // Opcional
+    });
+
+    test('validateVin valida longitud y caracteres alfanuméricos', () {
+      expect(validator.validateVin('AB'), isNotNull); // < 5
+      expect(validator.validateVin('A' * 31), isNotNull); // > 30
+      expect(validator.validateVin('AB-123'), isNotNull); // símbolos
+      expect(validator.validateVin('8AJB276A0C1234567'), isNull);
+      expect(validator.validateVin(''), isNull); // Opcional
+    });
+
+    test('validateVehicleType valida tipos permitidos', () {
+      expect(validator.validateVehicleType('moto'), isNull);
+      expect(validator.validateVehicleType('avion'), isNotNull);
+      expect(validator.validateVehicleType(''), isNull); // Opcional
+    });
+
+    test('validateObservations rechaza observaciones demasiado largas', () {
+      expect(validator.validateObservations('O' * 501), isNotNull);
+      expect(validator.validateObservations('Nota libre'), isNull);
+      expect(validator.validateObservations(''), isNull); // Opcional
+    });
   });
 }

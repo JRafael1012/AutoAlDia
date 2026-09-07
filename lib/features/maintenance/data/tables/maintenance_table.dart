@@ -12,17 +12,26 @@ class Maintenance extends Table {
 
   IntColumn get vehicleId => integer().references(Vehicles, #id, onDelete: KeyAction.cascade)();
 
-  /// Nullable: un mantenimiento puede no corresponder al catálogo.
-  IntColumn get typeId => integer().references(MaintenanceTypes, #id).nullable()();
+  /// Nullable: un mantenimiento puede no corresponder al catálogo. Si el tipo
+  /// se elimina del catálogo, el historial conserva el registro con `typeId = null`.
+  IntColumn get typeId =>
+      integer().references(MaintenanceTypes, #id, onDelete: KeyAction.setNull).nullable()();
 
   DateTimeColumn get date => dateTime()();
 
+  /// Nullable: en registros históricos el odómetro puede no estar disponible.
   RealColumn get odometerKm => real().nullable()();
 
   TextColumn get title => text().withLength(min: 1, max: 120)();
 
   /// Decisión: monto como entero (unidad mínima de la moneda).
   IntColumn get cost => integer()();
+
+  /// Taller que realizó el servicio (opcional).
+  TextColumn get workshop => text().nullable()();
+
+  /// Número de factura del servicio (opcional).
+  TextColumn get invoiceNumber => text().nullable()();
 
   /// Recordatorio por fecha (si se definió uno).
   DateTimeColumn get nextDueDate => dateTime().nullable()();

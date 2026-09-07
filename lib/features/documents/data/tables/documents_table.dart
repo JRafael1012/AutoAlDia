@@ -30,5 +30,14 @@ class Documents extends Table {
   /// Días de anticipación para la alerta de vencimiento.
   IntColumn get reminderDays => integer().withDefault(const Constant(15))();
 
+  /// Decisión: monto como entero (unidad mínima de la moneda).
+  IntColumn get cost => integer().withDefault(const Constant(0))();
+
+  /// Entidad que expide el documento (opcional).
+  TextColumn get entity => text().nullable()();
+
+  /// vigente | proximo | vencido.
+  TextColumn get status => text().withDefault(const Constant('vigente'))();
+
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 }

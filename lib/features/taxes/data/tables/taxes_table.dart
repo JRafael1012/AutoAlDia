@@ -14,13 +14,22 @@ class Taxes extends Table {
 
   TextColumn get taxType => text().withLength(min: 1, max: 60)();
 
+  /// Año fiscal del impuesto (ej. 2026).
+  IntColumn get taxYear => integer()();
+
   /// Decisión: monto como entero (unidad mínima de la moneda).
   IntColumn get amount => integer()();
 
   DateTimeColumn get dueDate => dateTime()();
 
+  /// pendiente | pagado | vencido.
+  TextColumn get status => text().withDefault(const Constant('pendiente'))();
+
   /// Nullable: null = impuesto aún no pagado.
   DateTimeColumn get paidDate => dateTime().nullable()();
+
+  /// Ruta relativa del comprobante de pago dentro de `app_documents/...`.
+  TextColumn get receiptPath => text().nullable()();
 
   IntColumn get reminderDays => integer().withDefault(const Constant(15))();
 

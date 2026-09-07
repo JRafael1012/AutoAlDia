@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/storage/storage_providers.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/models/vehicle_profile.dart';
 
@@ -9,7 +11,7 @@ import '../../domain/models/vehicle_profile.dart';
 ///
 /// Muestra foto (o ícono por defecto), marca, modelo, año, placa, kilometraje,
 /// indicador de vehículo activo y botones de editar / eliminar.
-class VehicleCard extends StatelessWidget {
+class VehicleCard extends ConsumerWidget {
   const VehicleCard({
     required this.vehicle,
     required this.onTap,
@@ -26,7 +28,7 @@ class VehicleCard extends StatelessWidget {
   final VoidCallback onDelete;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final hasPhoto = vehicle.photoPath != null && vehicle.photoPath!.isNotEmpty;
 
@@ -50,7 +52,7 @@ class VehicleCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _thumbnail(hasPhoto, theme),
+              _thumbnail(ref, hasPhoto, theme),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -122,18 +124,29 @@ class VehicleCard extends StatelessWidget {
     );
   }
 
-  Widget _thumbnail(bool hasPhoto, ThemeData theme) {
+  Widget _thumbnail(WidgetRef ref, bool hasPhoto, ThemeData theme) {
     Widget child;
     if (hasPhoto) {
-      child = ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Image.file(
-          File(vehicle.photoPath!),
-          width: 64,
-          height: 64,
-          fit: BoxFit.cover,
-          errorBuilder: (_, _, _) => _defaultThumb(theme),
-        ),
+      // La foto se guarda como ruta relativa; se resuelve a absoluta aquí.
+      final storage = ref.watch(localStorageServiceProvider);
+      child = FutureBuilder<File>(
+        future: storage.resolveRelativeFile(vehicle.photoPath!),
+        builder: (context, snapshot) {
+          final file = snapshot.data;
+          if (snapshot.hasError || file == null || !file.existsSync()) {
+            return _defaultThumb(theme);
+          }
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.file(
+              file,
+              width: 64,
+              height: 64,
+              fit: BoxFit.cover,
+              errorBuilder: (_, _, _) => _defaultThumb(theme),
+            ),
+          );
+        },
       );
     } else {
       child = _defaultThumb(theme);

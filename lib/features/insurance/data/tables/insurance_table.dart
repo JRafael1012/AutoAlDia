@@ -18,12 +18,20 @@ class Insurance extends Table {
 
   TextColumn get coverage => text().nullable()();
 
+  /// todo_riesgo | responsabilidad_civil | otro.
+  TextColumn get policyType => text()();
+
   DateTimeColumn get startDate => dateTime().nullable()();
 
   DateTimeColumn get endDate => dateTime()();
 
   /// Decisión: monto como entero (unidad mínima de la moneda).
   IntColumn get premium => integer().nullable()();
+
+  /// anual | semestral | trimestral | mensual.
+  TextColumn get paymentFrequency => text().withDefault(const Constant('anual'))();
+
+  TextColumn get notes => text().nullable()();
 
   IntColumn get reminderDays => integer().withDefault(const Constant(15))();
 

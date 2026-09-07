@@ -34,14 +34,42 @@ void main() {
     final tempSource = File('${tempDir.path}${Platform.pathSeparator}source.jpg');
     await tempSource.writeAsString('fake-image-bytes');
 
-    final savedFile = await storageService.saveVehiclePhoto(
+    final relativePath = await storageService.saveVehiclePhoto(
       vehicleId: 10,
       sourceFile: tempSource,
     );
 
+    // Devuelve ruta relativa (convención del proyecto), nunca absoluta.
+    expect(relativePath.contains('photos'), isTrue);
+    final savedFile = await storageService.resolveRelativeFile(relativePath);
     expect(await savedFile.exists(), isTrue);
-    expect(savedFile.path.contains('photos'), isTrue);
+    expect(savedFile.path.contains(tempDir.path), isTrue);
     expect(await savedFile.readAsString(), 'fake-image-bytes');
+  });
+
+  test('deleteRelativeFile elimina el archivo relativo si existe', () async {
+    final tempSource = File('${tempDir.path}${Platform.pathSeparator}source.jpg');
+    await tempSource.writeAsString('fake-image-bytes');
+
+    final relativePath = await storageService.saveVehiclePhoto(
+      vehicleId: 10,
+      sourceFile: tempSource,
+    );
+
+    final savedFile = await storageService.resolveRelativeFile(relativePath);
+    expect(await savedFile.exists(), isTrue);
+
+    await storageService.deleteRelativeFile(relativePath);
+    expect(await savedFile.exists(), isFalse);
+  });
+
+  test('deleteRelativeFile con ruta vacía no borra nada', () async {
+    final base = await storageService.getAppDocumentsDirectory();
+    expect(base.path, tempDir.path);
+
+    // No debe lanzar ni borrar la raíz de app_documents.
+    await storageService.deleteRelativeFile('');
+    expect(await base.exists(), isTrue);
   });
 
   test('deleteVehicleDirectory elimina en cascada física todos los archivos del vehículo', () async {

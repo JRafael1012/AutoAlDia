@@ -28,12 +28,10 @@ class _PinLockScreenState extends ConsumerState<PinLockScreen> {
       _error = null;
     });
     try {
-      final ok = await ref
+      // El controlador lanza excepción si el PIN es incorrecto; nunca devuelve false.
+      await ref
           .read(pinUnlockControllerProvider.notifier)
           .unlockWithPin(_pinController.text);
-      if (!ok) {
-        setState(() => _error = 'El PIN es incorrecto.');
-      }
     } catch (e) {
       setState(() {
         _error = e is Exception ? e.toString() : 'No se pudo verificar el PIN.';

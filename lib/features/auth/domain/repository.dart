@@ -8,8 +8,9 @@ abstract interface class AuthRepository {
   /// (una sola fila por instalación en el MVP).
   Future<UserProfile?> getProfile();
 
-  /// Crea el perfil local. Si ya existe uno, lanza un error de validación
-  /// (no se permite duplicar el perfil).
+  /// Crea el perfil local. Como solo puede existir un perfil por instalación,
+  /// si ya existe uno lo actualiza (upsert) con los datos enviados en lugar de
+  /// duplicarlo; nunca devuelve un error de duplicado.
   Future<UserProfile> createProfile({
     required String name,
     String? email,

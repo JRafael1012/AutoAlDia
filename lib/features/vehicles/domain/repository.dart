@@ -29,9 +29,22 @@ abstract interface class VehicleRepository {
     required String fuelType,
     int? year,
     String? plate,
+    double? tankCapacity,
+    DateTime? acquisitionDate,
+    int? purchaseValue,
+    int? currentEstimatedValue,
+    String? color,
+    String? vin,
+    String? vehicleType,
+    String? observations,
   });
 
   /// Actualiza campos de un vehículo existente.
+  ///
+  /// Los campos nuevos opcionales ([tankCapacity], [acquisitionDate],
+  /// [purchaseValue], [currentEstimatedValue], [color], [vin], [vehicleType],
+  /// [observations]) se interpretan con su valor exacto: pasar `null` los
+  /// limpia en la base de datos.
   Future<VehicleProfile> update({
     required int id,
     String? brand,
@@ -42,6 +55,14 @@ abstract interface class VehicleRepository {
     String? fuelType,
     String? status,
     String? photoPath,
+    double? tankCapacity,
+    DateTime? acquisitionDate,
+    int? purchaseValue,
+    int? currentEstimatedValue,
+    String? color,
+    String? vin,
+    String? vehicleType,
+    String? observations,
   });
 
   /// Marca un vehículo como activo y desactiva los demás del mismo usuario.

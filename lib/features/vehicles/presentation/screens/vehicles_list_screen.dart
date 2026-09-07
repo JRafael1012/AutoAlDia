@@ -114,7 +114,7 @@ class VehiclesListScreen extends ConsumerWidget {
     try {
       await ref
           .read(vehiclesListControllerProvider.notifier)
-          .deleteVehicle(vehicle.id);
+          .deleteVehicle(vehicle);
       messenger.showSnackBar(
         SnackBar(
           content: Text('El vehículo "${vehicle.brand} ${vehicle.model}" fue eliminado.'),

@@ -14,4 +14,10 @@ class MaintenanceTypes extends Table {
 
   /// Intervalo recomendado en meses (opcional).
   IntColumn get recommendedIntervalMonths => integer().nullable()();
+
+  /// Descripción del servicio (opcional) — ej. "Reemplaza aceite y filtro".
+  TextColumn get description => text().nullable()();
+
+  /// true si el tipo fue creado por el usuario (no viene del catálogo base).
+  BoolColumn get isCustom => boolean().withDefault(const Constant(false))();
 }

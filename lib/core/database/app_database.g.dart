@@ -539,6 +539,106 @@ class $VehiclesTable extends Vehicles with TableInfo<$VehiclesTable, Vehicle> {
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _tankCapacityMeta = const VerificationMeta(
+    'tankCapacity',
+  );
+  @override
+  late final GeneratedColumn<double> tankCapacity = GeneratedColumn<double>(
+    'tank_capacity',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _acquisitionDateMeta = const VerificationMeta(
+    'acquisitionDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> acquisitionDate =
+      GeneratedColumn<DateTime>(
+        'acquisition_date',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _purchaseValueMeta = const VerificationMeta(
+    'purchaseValue',
+  );
+  @override
+  late final GeneratedColumn<int> purchaseValue = GeneratedColumn<int>(
+    'purchase_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _currentEstimatedValueMeta =
+      const VerificationMeta('currentEstimatedValue');
+  @override
+  late final GeneratedColumn<int> currentEstimatedValue = GeneratedColumn<int>(
+    'current_estimated_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _colorMeta = const VerificationMeta('color');
+  @override
+  late final GeneratedColumn<String> color = GeneratedColumn<String>(
+    'color',
+    aliasedName,
+    true,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 40,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _vinMeta = const VerificationMeta('vin');
+  @override
+  late final GeneratedColumn<String> vin = GeneratedColumn<String>(
+    'vin',
+    aliasedName,
+    true,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 30,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _vehicleTypeMeta = const VerificationMeta(
+    'vehicleType',
+  );
+  @override
+  late final GeneratedColumn<String> vehicleType = GeneratedColumn<String>(
+    'vehicle_type',
+    aliasedName,
+    true,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 30,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _observationsMeta = const VerificationMeta(
+    'observations',
+  );
+  @override
+  late final GeneratedColumn<String> observations = GeneratedColumn<String>(
+    'observations',
+    aliasedName,
+    true,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 500,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -576,6 +676,14 @@ class $VehiclesTable extends Vehicles with TableInfo<$VehiclesTable, Vehicle> {
     status,
     photoPath,
     isActive,
+    tankCapacity,
+    acquisitionDate,
+    purchaseValue,
+    currentEstimatedValue,
+    color,
+    vin,
+    vehicleType,
+    observations,
     createdAt,
     updatedAt,
   ];
@@ -664,6 +772,72 @@ class $VehiclesTable extends Vehicles with TableInfo<$VehiclesTable, Vehicle> {
         isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta),
       );
     }
+    if (data.containsKey('tank_capacity')) {
+      context.handle(
+        _tankCapacityMeta,
+        tankCapacity.isAcceptableOrUnknown(
+          data['tank_capacity']!,
+          _tankCapacityMeta,
+        ),
+      );
+    }
+    if (data.containsKey('acquisition_date')) {
+      context.handle(
+        _acquisitionDateMeta,
+        acquisitionDate.isAcceptableOrUnknown(
+          data['acquisition_date']!,
+          _acquisitionDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('purchase_value')) {
+      context.handle(
+        _purchaseValueMeta,
+        purchaseValue.isAcceptableOrUnknown(
+          data['purchase_value']!,
+          _purchaseValueMeta,
+        ),
+      );
+    }
+    if (data.containsKey('current_estimated_value')) {
+      context.handle(
+        _currentEstimatedValueMeta,
+        currentEstimatedValue.isAcceptableOrUnknown(
+          data['current_estimated_value']!,
+          _currentEstimatedValueMeta,
+        ),
+      );
+    }
+    if (data.containsKey('color')) {
+      context.handle(
+        _colorMeta,
+        color.isAcceptableOrUnknown(data['color']!, _colorMeta),
+      );
+    }
+    if (data.containsKey('vin')) {
+      context.handle(
+        _vinMeta,
+        vin.isAcceptableOrUnknown(data['vin']!, _vinMeta),
+      );
+    }
+    if (data.containsKey('vehicle_type')) {
+      context.handle(
+        _vehicleTypeMeta,
+        vehicleType.isAcceptableOrUnknown(
+          data['vehicle_type']!,
+          _vehicleTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('observations')) {
+      context.handle(
+        _observationsMeta,
+        observations.isAcceptableOrUnknown(
+          data['observations']!,
+          _observationsMeta,
+        ),
+      );
+    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
@@ -729,6 +903,38 @@ class $VehiclesTable extends Vehicles with TableInfo<$VehiclesTable, Vehicle> {
         DriftSqlType.bool,
         data['${effectivePrefix}is_active'],
       )!,
+      tankCapacity: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}tank_capacity'],
+      ),
+      acquisitionDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}acquisition_date'],
+      ),
+      purchaseValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}purchase_value'],
+      ),
+      currentEstimatedValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}current_estimated_value'],
+      ),
+      color: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}color'],
+      ),
+      vin: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vin'],
+      ),
+      vehicleType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vehicle_type'],
+      ),
+      observations: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}observations'],
+      ),
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -768,6 +974,30 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
 
   /// Vehículo seleccionado por el usuario (para módulos como combustible/gastos).
   final bool isActive;
+
+  /// Capacidad del tanque en litros (opcional).
+  final double? tankCapacity;
+
+  /// Fecha de adquisición del vehículo (opcional).
+  final DateTime? acquisitionDate;
+
+  /// Decisión: monto como entero (unidad mínima de la moneda).
+  final int? purchaseValue;
+
+  /// Decisión: monto como entero (unidad mínima de la moneda).
+  final int? currentEstimatedValue;
+
+  /// Color del vehículo (opcional).
+  final String? color;
+
+  /// Número de identificación vehicular (VIN) (opcional).
+  final String? vin;
+
+  /// carro | moto | camioneta | otro. TEXT libre validado por la UI.
+  final String? vehicleType;
+
+  /// Observaciones o notas libres (opcional).
+  final String? observations;
   final DateTime createdAt;
   final DateTime updatedAt;
   const Vehicle({
@@ -782,6 +1012,14 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
     required this.status,
     this.photoPath,
     required this.isActive,
+    this.tankCapacity,
+    this.acquisitionDate,
+    this.purchaseValue,
+    this.currentEstimatedValue,
+    this.color,
+    this.vin,
+    this.vehicleType,
+    this.observations,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -805,6 +1043,30 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
       map['photo_path'] = Variable<String>(photoPath);
     }
     map['is_active'] = Variable<bool>(isActive);
+    if (!nullToAbsent || tankCapacity != null) {
+      map['tank_capacity'] = Variable<double>(tankCapacity);
+    }
+    if (!nullToAbsent || acquisitionDate != null) {
+      map['acquisition_date'] = Variable<DateTime>(acquisitionDate);
+    }
+    if (!nullToAbsent || purchaseValue != null) {
+      map['purchase_value'] = Variable<int>(purchaseValue);
+    }
+    if (!nullToAbsent || currentEstimatedValue != null) {
+      map['current_estimated_value'] = Variable<int>(currentEstimatedValue);
+    }
+    if (!nullToAbsent || color != null) {
+      map['color'] = Variable<String>(color);
+    }
+    if (!nullToAbsent || vin != null) {
+      map['vin'] = Variable<String>(vin);
+    }
+    if (!nullToAbsent || vehicleType != null) {
+      map['vehicle_type'] = Variable<String>(vehicleType);
+    }
+    if (!nullToAbsent || observations != null) {
+      map['observations'] = Variable<String>(observations);
+    }
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
@@ -827,6 +1089,28 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
           ? const Value.absent()
           : Value(photoPath),
       isActive: Value(isActive),
+      tankCapacity: tankCapacity == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tankCapacity),
+      acquisitionDate: acquisitionDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(acquisitionDate),
+      purchaseValue: purchaseValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(purchaseValue),
+      currentEstimatedValue: currentEstimatedValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(currentEstimatedValue),
+      color: color == null && nullToAbsent
+          ? const Value.absent()
+          : Value(color),
+      vin: vin == null && nullToAbsent ? const Value.absent() : Value(vin),
+      vehicleType: vehicleType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(vehicleType),
+      observations: observations == null && nullToAbsent
+          ? const Value.absent()
+          : Value(observations),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
     );
@@ -849,6 +1133,16 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
       status: serializer.fromJson<String>(json['status']),
       photoPath: serializer.fromJson<String?>(json['photoPath']),
       isActive: serializer.fromJson<bool>(json['isActive']),
+      tankCapacity: serializer.fromJson<double?>(json['tankCapacity']),
+      acquisitionDate: serializer.fromJson<DateTime?>(json['acquisitionDate']),
+      purchaseValue: serializer.fromJson<int?>(json['purchaseValue']),
+      currentEstimatedValue: serializer.fromJson<int?>(
+        json['currentEstimatedValue'],
+      ),
+      color: serializer.fromJson<String?>(json['color']),
+      vin: serializer.fromJson<String?>(json['vin']),
+      vehicleType: serializer.fromJson<String?>(json['vehicleType']),
+      observations: serializer.fromJson<String?>(json['observations']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -868,6 +1162,14 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
       'status': serializer.toJson<String>(status),
       'photoPath': serializer.toJson<String?>(photoPath),
       'isActive': serializer.toJson<bool>(isActive),
+      'tankCapacity': serializer.toJson<double?>(tankCapacity),
+      'acquisitionDate': serializer.toJson<DateTime?>(acquisitionDate),
+      'purchaseValue': serializer.toJson<int?>(purchaseValue),
+      'currentEstimatedValue': serializer.toJson<int?>(currentEstimatedValue),
+      'color': serializer.toJson<String?>(color),
+      'vin': serializer.toJson<String?>(vin),
+      'vehicleType': serializer.toJson<String?>(vehicleType),
+      'observations': serializer.toJson<String?>(observations),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
@@ -885,6 +1187,14 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
     String? status,
     Value<String?> photoPath = const Value.absent(),
     bool? isActive,
+    Value<double?> tankCapacity = const Value.absent(),
+    Value<DateTime?> acquisitionDate = const Value.absent(),
+    Value<int?> purchaseValue = const Value.absent(),
+    Value<int?> currentEstimatedValue = const Value.absent(),
+    Value<String?> color = const Value.absent(),
+    Value<String?> vin = const Value.absent(),
+    Value<String?> vehicleType = const Value.absent(),
+    Value<String?> observations = const Value.absent(),
     DateTime? createdAt,
     DateTime? updatedAt,
   }) => Vehicle(
@@ -899,6 +1209,20 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
     status: status ?? this.status,
     photoPath: photoPath.present ? photoPath.value : this.photoPath,
     isActive: isActive ?? this.isActive,
+    tankCapacity: tankCapacity.present ? tankCapacity.value : this.tankCapacity,
+    acquisitionDate: acquisitionDate.present
+        ? acquisitionDate.value
+        : this.acquisitionDate,
+    purchaseValue: purchaseValue.present
+        ? purchaseValue.value
+        : this.purchaseValue,
+    currentEstimatedValue: currentEstimatedValue.present
+        ? currentEstimatedValue.value
+        : this.currentEstimatedValue,
+    color: color.present ? color.value : this.color,
+    vin: vin.present ? vin.value : this.vin,
+    vehicleType: vehicleType.present ? vehicleType.value : this.vehicleType,
+    observations: observations.present ? observations.value : this.observations,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
   );
@@ -917,6 +1241,26 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
       status: data.status.present ? data.status.value : this.status,
       photoPath: data.photoPath.present ? data.photoPath.value : this.photoPath,
       isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      tankCapacity: data.tankCapacity.present
+          ? data.tankCapacity.value
+          : this.tankCapacity,
+      acquisitionDate: data.acquisitionDate.present
+          ? data.acquisitionDate.value
+          : this.acquisitionDate,
+      purchaseValue: data.purchaseValue.present
+          ? data.purchaseValue.value
+          : this.purchaseValue,
+      currentEstimatedValue: data.currentEstimatedValue.present
+          ? data.currentEstimatedValue.value
+          : this.currentEstimatedValue,
+      color: data.color.present ? data.color.value : this.color,
+      vin: data.vin.present ? data.vin.value : this.vin,
+      vehicleType: data.vehicleType.present
+          ? data.vehicleType.value
+          : this.vehicleType,
+      observations: data.observations.present
+          ? data.observations.value
+          : this.observations,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
@@ -936,6 +1280,14 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
           ..write('status: $status, ')
           ..write('photoPath: $photoPath, ')
           ..write('isActive: $isActive, ')
+          ..write('tankCapacity: $tankCapacity, ')
+          ..write('acquisitionDate: $acquisitionDate, ')
+          ..write('purchaseValue: $purchaseValue, ')
+          ..write('currentEstimatedValue: $currentEstimatedValue, ')
+          ..write('color: $color, ')
+          ..write('vin: $vin, ')
+          ..write('vehicleType: $vehicleType, ')
+          ..write('observations: $observations, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -943,7 +1295,7 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
   }
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     id,
     userId,
     brand,
@@ -955,9 +1307,17 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
     status,
     photoPath,
     isActive,
+    tankCapacity,
+    acquisitionDate,
+    purchaseValue,
+    currentEstimatedValue,
+    color,
+    vin,
+    vehicleType,
+    observations,
     createdAt,
     updatedAt,
-  );
+  ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -973,6 +1333,14 @@ class Vehicle extends DataClass implements Insertable<Vehicle> {
           other.status == this.status &&
           other.photoPath == this.photoPath &&
           other.isActive == this.isActive &&
+          other.tankCapacity == this.tankCapacity &&
+          other.acquisitionDate == this.acquisitionDate &&
+          other.purchaseValue == this.purchaseValue &&
+          other.currentEstimatedValue == this.currentEstimatedValue &&
+          other.color == this.color &&
+          other.vin == this.vin &&
+          other.vehicleType == this.vehicleType &&
+          other.observations == this.observations &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
 }
@@ -989,6 +1357,14 @@ class VehiclesCompanion extends UpdateCompanion<Vehicle> {
   final Value<String> status;
   final Value<String?> photoPath;
   final Value<bool> isActive;
+  final Value<double?> tankCapacity;
+  final Value<DateTime?> acquisitionDate;
+  final Value<int?> purchaseValue;
+  final Value<int?> currentEstimatedValue;
+  final Value<String?> color;
+  final Value<String?> vin;
+  final Value<String?> vehicleType;
+  final Value<String?> observations;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   const VehiclesCompanion({
@@ -1003,6 +1379,14 @@ class VehiclesCompanion extends UpdateCompanion<Vehicle> {
     this.status = const Value.absent(),
     this.photoPath = const Value.absent(),
     this.isActive = const Value.absent(),
+    this.tankCapacity = const Value.absent(),
+    this.acquisitionDate = const Value.absent(),
+    this.purchaseValue = const Value.absent(),
+    this.currentEstimatedValue = const Value.absent(),
+    this.color = const Value.absent(),
+    this.vin = const Value.absent(),
+    this.vehicleType = const Value.absent(),
+    this.observations = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   });
@@ -1018,6 +1402,14 @@ class VehiclesCompanion extends UpdateCompanion<Vehicle> {
     this.status = const Value.absent(),
     this.photoPath = const Value.absent(),
     this.isActive = const Value.absent(),
+    this.tankCapacity = const Value.absent(),
+    this.acquisitionDate = const Value.absent(),
+    this.purchaseValue = const Value.absent(),
+    this.currentEstimatedValue = const Value.absent(),
+    this.color = const Value.absent(),
+    this.vin = const Value.absent(),
+    this.vehicleType = const Value.absent(),
+    this.observations = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   }) : userId = Value(userId),
@@ -1037,6 +1429,14 @@ class VehiclesCompanion extends UpdateCompanion<Vehicle> {
     Expression<String>? status,
     Expression<String>? photoPath,
     Expression<bool>? isActive,
+    Expression<double>? tankCapacity,
+    Expression<DateTime>? acquisitionDate,
+    Expression<int>? purchaseValue,
+    Expression<int>? currentEstimatedValue,
+    Expression<String>? color,
+    Expression<String>? vin,
+    Expression<String>? vehicleType,
+    Expression<String>? observations,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
   }) {
@@ -1052,6 +1452,15 @@ class VehiclesCompanion extends UpdateCompanion<Vehicle> {
       if (status != null) 'status': status,
       if (photoPath != null) 'photo_path': photoPath,
       if (isActive != null) 'is_active': isActive,
+      if (tankCapacity != null) 'tank_capacity': tankCapacity,
+      if (acquisitionDate != null) 'acquisition_date': acquisitionDate,
+      if (purchaseValue != null) 'purchase_value': purchaseValue,
+      if (currentEstimatedValue != null)
+        'current_estimated_value': currentEstimatedValue,
+      if (color != null) 'color': color,
+      if (vin != null) 'vin': vin,
+      if (vehicleType != null) 'vehicle_type': vehicleType,
+      if (observations != null) 'observations': observations,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
     });
@@ -1069,6 +1478,14 @@ class VehiclesCompanion extends UpdateCompanion<Vehicle> {
     Value<String>? status,
     Value<String?>? photoPath,
     Value<bool>? isActive,
+    Value<double?>? tankCapacity,
+    Value<DateTime?>? acquisitionDate,
+    Value<int?>? purchaseValue,
+    Value<int?>? currentEstimatedValue,
+    Value<String?>? color,
+    Value<String?>? vin,
+    Value<String?>? vehicleType,
+    Value<String?>? observations,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
   }) {
@@ -1084,6 +1501,15 @@ class VehiclesCompanion extends UpdateCompanion<Vehicle> {
       status: status ?? this.status,
       photoPath: photoPath ?? this.photoPath,
       isActive: isActive ?? this.isActive,
+      tankCapacity: tankCapacity ?? this.tankCapacity,
+      acquisitionDate: acquisitionDate ?? this.acquisitionDate,
+      purchaseValue: purchaseValue ?? this.purchaseValue,
+      currentEstimatedValue:
+          currentEstimatedValue ?? this.currentEstimatedValue,
+      color: color ?? this.color,
+      vin: vin ?? this.vin,
+      vehicleType: vehicleType ?? this.vehicleType,
+      observations: observations ?? this.observations,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -1125,6 +1551,32 @@ class VehiclesCompanion extends UpdateCompanion<Vehicle> {
     if (isActive.present) {
       map['is_active'] = Variable<bool>(isActive.value);
     }
+    if (tankCapacity.present) {
+      map['tank_capacity'] = Variable<double>(tankCapacity.value);
+    }
+    if (acquisitionDate.present) {
+      map['acquisition_date'] = Variable<DateTime>(acquisitionDate.value);
+    }
+    if (purchaseValue.present) {
+      map['purchase_value'] = Variable<int>(purchaseValue.value);
+    }
+    if (currentEstimatedValue.present) {
+      map['current_estimated_value'] = Variable<int>(
+        currentEstimatedValue.value,
+      );
+    }
+    if (color.present) {
+      map['color'] = Variable<String>(color.value);
+    }
+    if (vin.present) {
+      map['vin'] = Variable<String>(vin.value);
+    }
+    if (vehicleType.present) {
+      map['vehicle_type'] = Variable<String>(vehicleType.value);
+    }
+    if (observations.present) {
+      map['observations'] = Variable<String>(observations.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -1148,6 +1600,14 @@ class VehiclesCompanion extends UpdateCompanion<Vehicle> {
           ..write('status: $status, ')
           ..write('photoPath: $photoPath, ')
           ..write('isActive: $isActive, ')
+          ..write('tankCapacity: $tankCapacity, ')
+          ..write('acquisitionDate: $acquisitionDate, ')
+          ..write('purchaseValue: $purchaseValue, ')
+          ..write('currentEstimatedValue: $currentEstimatedValue, ')
+          ..write('color: $color, ')
+          ..write('vin: $vin, ')
+          ..write('vehicleType: $vehicleType, ')
+          ..write('observations: $observations, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -1824,12 +2284,40 @@ class $MaintenanceTypesTable extends MaintenanceTypes
         type: DriftSqlType.int,
         requiredDuringInsert: false,
       );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isCustomMeta = const VerificationMeta(
+    'isCustom',
+  );
+  @override
+  late final GeneratedColumn<bool> isCustom = GeneratedColumn<bool>(
+    'is_custom',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_custom" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
     name,
     recommendedIntervalKm,
     recommendedIntervalMonths,
+    description,
+    isCustom,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1872,6 +2360,21 @@ class $MaintenanceTypesTable extends MaintenanceTypes
         ),
       );
     }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_custom')) {
+      context.handle(
+        _isCustomMeta,
+        isCustom.isAcceptableOrUnknown(data['is_custom']!, _isCustomMeta),
+      );
+    }
     return context;
   }
 
@@ -1897,6 +2400,14 @@ class $MaintenanceTypesTable extends MaintenanceTypes
         DriftSqlType.int,
         data['${effectivePrefix}recommended_interval_months'],
       ),
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      isCustom: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_custom'],
+      )!,
     );
   }
 
@@ -1915,11 +2426,19 @@ class MaintenanceType extends DataClass implements Insertable<MaintenanceType> {
 
   /// Intervalo recomendado en meses (opcional).
   final int? recommendedIntervalMonths;
+
+  /// Descripción del servicio (opcional) — ej. "Reemplaza aceite y filtro".
+  final String? description;
+
+  /// true si el tipo fue creado por el usuario (no viene del catálogo base).
+  final bool isCustom;
   const MaintenanceType({
     required this.id,
     required this.name,
     this.recommendedIntervalKm,
     this.recommendedIntervalMonths,
+    this.description,
+    required this.isCustom,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1934,6 +2453,10 @@ class MaintenanceType extends DataClass implements Insertable<MaintenanceType> {
         recommendedIntervalMonths,
       );
     }
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    map['is_custom'] = Variable<bool>(isCustom);
     return map;
   }
 
@@ -1948,6 +2471,10 @@ class MaintenanceType extends DataClass implements Insertable<MaintenanceType> {
           recommendedIntervalMonths == null && nullToAbsent
           ? const Value.absent()
           : Value(recommendedIntervalMonths),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      isCustom: Value(isCustom),
     );
   }
 
@@ -1965,6 +2492,8 @@ class MaintenanceType extends DataClass implements Insertable<MaintenanceType> {
       recommendedIntervalMonths: serializer.fromJson<int?>(
         json['recommendedIntervalMonths'],
       ),
+      description: serializer.fromJson<String?>(json['description']),
+      isCustom: serializer.fromJson<bool>(json['isCustom']),
     );
   }
   @override
@@ -1979,6 +2508,8 @@ class MaintenanceType extends DataClass implements Insertable<MaintenanceType> {
       'recommendedIntervalMonths': serializer.toJson<int?>(
         recommendedIntervalMonths,
       ),
+      'description': serializer.toJson<String?>(description),
+      'isCustom': serializer.toJson<bool>(isCustom),
     };
   }
 
@@ -1987,6 +2518,8 @@ class MaintenanceType extends DataClass implements Insertable<MaintenanceType> {
     String? name,
     Value<double?> recommendedIntervalKm = const Value.absent(),
     Value<int?> recommendedIntervalMonths = const Value.absent(),
+    Value<String?> description = const Value.absent(),
+    bool? isCustom,
   }) => MaintenanceType(
     id: id ?? this.id,
     name: name ?? this.name,
@@ -1996,6 +2529,8 @@ class MaintenanceType extends DataClass implements Insertable<MaintenanceType> {
     recommendedIntervalMonths: recommendedIntervalMonths.present
         ? recommendedIntervalMonths.value
         : this.recommendedIntervalMonths,
+    description: description.present ? description.value : this.description,
+    isCustom: isCustom ?? this.isCustom,
   );
   MaintenanceType copyWithCompanion(MaintenanceTypesCompanion data) {
     return MaintenanceType(
@@ -2007,6 +2542,10 @@ class MaintenanceType extends DataClass implements Insertable<MaintenanceType> {
       recommendedIntervalMonths: data.recommendedIntervalMonths.present
           ? data.recommendedIntervalMonths.value
           : this.recommendedIntervalMonths,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      isCustom: data.isCustom.present ? data.isCustom.value : this.isCustom,
     );
   }
 
@@ -2016,14 +2555,22 @@ class MaintenanceType extends DataClass implements Insertable<MaintenanceType> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('recommendedIntervalKm: $recommendedIntervalKm, ')
-          ..write('recommendedIntervalMonths: $recommendedIntervalMonths')
+          ..write('recommendedIntervalMonths: $recommendedIntervalMonths, ')
+          ..write('description: $description, ')
+          ..write('isCustom: $isCustom')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, name, recommendedIntervalKm, recommendedIntervalMonths);
+  int get hashCode => Object.hash(
+    id,
+    name,
+    recommendedIntervalKm,
+    recommendedIntervalMonths,
+    description,
+    isCustom,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2031,7 +2578,9 @@ class MaintenanceType extends DataClass implements Insertable<MaintenanceType> {
           other.id == this.id &&
           other.name == this.name &&
           other.recommendedIntervalKm == this.recommendedIntervalKm &&
-          other.recommendedIntervalMonths == this.recommendedIntervalMonths);
+          other.recommendedIntervalMonths == this.recommendedIntervalMonths &&
+          other.description == this.description &&
+          other.isCustom == this.isCustom);
 }
 
 class MaintenanceTypesCompanion extends UpdateCompanion<MaintenanceType> {
@@ -2039,23 +2588,31 @@ class MaintenanceTypesCompanion extends UpdateCompanion<MaintenanceType> {
   final Value<String> name;
   final Value<double?> recommendedIntervalKm;
   final Value<int?> recommendedIntervalMonths;
+  final Value<String?> description;
+  final Value<bool> isCustom;
   const MaintenanceTypesCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.recommendedIntervalKm = const Value.absent(),
     this.recommendedIntervalMonths = const Value.absent(),
+    this.description = const Value.absent(),
+    this.isCustom = const Value.absent(),
   });
   MaintenanceTypesCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     this.recommendedIntervalKm = const Value.absent(),
     this.recommendedIntervalMonths = const Value.absent(),
+    this.description = const Value.absent(),
+    this.isCustom = const Value.absent(),
   }) : name = Value(name);
   static Insertable<MaintenanceType> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<double>? recommendedIntervalKm,
     Expression<int>? recommendedIntervalMonths,
+    Expression<String>? description,
+    Expression<bool>? isCustom,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -2064,6 +2621,8 @@ class MaintenanceTypesCompanion extends UpdateCompanion<MaintenanceType> {
         'recommended_interval_km': recommendedIntervalKm,
       if (recommendedIntervalMonths != null)
         'recommended_interval_months': recommendedIntervalMonths,
+      if (description != null) 'description': description,
+      if (isCustom != null) 'is_custom': isCustom,
     });
   }
 
@@ -2072,6 +2631,8 @@ class MaintenanceTypesCompanion extends UpdateCompanion<MaintenanceType> {
     Value<String>? name,
     Value<double?>? recommendedIntervalKm,
     Value<int?>? recommendedIntervalMonths,
+    Value<String?>? description,
+    Value<bool>? isCustom,
   }) {
     return MaintenanceTypesCompanion(
       id: id ?? this.id,
@@ -2080,6 +2641,8 @@ class MaintenanceTypesCompanion extends UpdateCompanion<MaintenanceType> {
           recommendedIntervalKm ?? this.recommendedIntervalKm,
       recommendedIntervalMonths:
           recommendedIntervalMonths ?? this.recommendedIntervalMonths,
+      description: description ?? this.description,
+      isCustom: isCustom ?? this.isCustom,
     );
   }
 
@@ -2102,6 +2665,12 @@ class MaintenanceTypesCompanion extends UpdateCompanion<MaintenanceType> {
         recommendedIntervalMonths.value,
       );
     }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (isCustom.present) {
+      map['is_custom'] = Variable<bool>(isCustom.value);
+    }
     return map;
   }
 
@@ -2111,7 +2680,9 @@ class MaintenanceTypesCompanion extends UpdateCompanion<MaintenanceType> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('recommendedIntervalKm: $recommendedIntervalKm, ')
-          ..write('recommendedIntervalMonths: $recommendedIntervalMonths')
+          ..write('recommendedIntervalMonths: $recommendedIntervalMonths, ')
+          ..write('description: $description, ')
+          ..write('isCustom: $isCustom')
           ..write(')'))
         .toString();
   }
@@ -2159,7 +2730,7 @@ class $MaintenanceTable extends Maintenance
     type: DriftSqlType.int,
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES maintenance_types (id)',
+      'REFERENCES maintenance_types (id) ON DELETE SET NULL',
     ),
   );
   static const VerificationMeta _dateMeta = const VerificationMeta('date');
@@ -2203,6 +2774,28 @@ class $MaintenanceTable extends Maintenance
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
+  );
+  static const VerificationMeta _workshopMeta = const VerificationMeta(
+    'workshop',
+  );
+  @override
+  late final GeneratedColumn<String> workshop = GeneratedColumn<String>(
+    'workshop',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _invoiceNumberMeta = const VerificationMeta(
+    'invoiceNumber',
+  );
+  @override
+  late final GeneratedColumn<String> invoiceNumber = GeneratedColumn<String>(
+    'invoice_number',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _nextDueDateMeta = const VerificationMeta(
     'nextDueDate',
@@ -2256,6 +2849,8 @@ class $MaintenanceTable extends Maintenance
     odometerKm,
     title,
     cost,
+    workshop,
+    invoiceNumber,
     nextDueDate,
     nextDueKm,
     notes,
@@ -2319,6 +2914,21 @@ class $MaintenanceTable extends Maintenance
       );
     } else if (isInserting) {
       context.missing(_costMeta);
+    }
+    if (data.containsKey('workshop')) {
+      context.handle(
+        _workshopMeta,
+        workshop.isAcceptableOrUnknown(data['workshop']!, _workshopMeta),
+      );
+    }
+    if (data.containsKey('invoice_number')) {
+      context.handle(
+        _invoiceNumberMeta,
+        invoiceNumber.isAcceptableOrUnknown(
+          data['invoice_number']!,
+          _invoiceNumberMeta,
+        ),
+      );
     }
     if (data.containsKey('next_due_date')) {
       context.handle(
@@ -2384,6 +2994,14 @@ class $MaintenanceTable extends Maintenance
         DriftSqlType.int,
         data['${effectivePrefix}cost'],
       )!,
+      workshop: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}workshop'],
+      ),
+      invoiceNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}invoice_number'],
+      ),
       nextDueDate: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}next_due_date'],
@@ -2413,14 +3031,23 @@ class MaintenanceData extends DataClass implements Insertable<MaintenanceData> {
   final int id;
   final int vehicleId;
 
-  /// Nullable: un mantenimiento puede no corresponder al catálogo.
+  /// Nullable: un mantenimiento puede no corresponder al catálogo. Si el tipo
+  /// se elimina del catálogo, el historial conserva el registro con `typeId = null`.
   final int? typeId;
   final DateTime date;
+
+  /// Nullable: en registros históricos el odómetro puede no estar disponible.
   final double? odometerKm;
   final String title;
 
   /// Decisión: monto como entero (unidad mínima de la moneda).
   final int cost;
+
+  /// Taller que realizó el servicio (opcional).
+  final String? workshop;
+
+  /// Número de factura del servicio (opcional).
+  final String? invoiceNumber;
 
   /// Recordatorio por fecha (si se definió uno).
   final DateTime? nextDueDate;
@@ -2437,6 +3064,8 @@ class MaintenanceData extends DataClass implements Insertable<MaintenanceData> {
     this.odometerKm,
     required this.title,
     required this.cost,
+    this.workshop,
+    this.invoiceNumber,
     this.nextDueDate,
     this.nextDueKm,
     this.notes,
@@ -2456,6 +3085,12 @@ class MaintenanceData extends DataClass implements Insertable<MaintenanceData> {
     }
     map['title'] = Variable<String>(title);
     map['cost'] = Variable<int>(cost);
+    if (!nullToAbsent || workshop != null) {
+      map['workshop'] = Variable<String>(workshop);
+    }
+    if (!nullToAbsent || invoiceNumber != null) {
+      map['invoice_number'] = Variable<String>(invoiceNumber);
+    }
     if (!nullToAbsent || nextDueDate != null) {
       map['next_due_date'] = Variable<DateTime>(nextDueDate);
     }
@@ -2482,6 +3117,12 @@ class MaintenanceData extends DataClass implements Insertable<MaintenanceData> {
           : Value(odometerKm),
       title: Value(title),
       cost: Value(cost),
+      workshop: workshop == null && nullToAbsent
+          ? const Value.absent()
+          : Value(workshop),
+      invoiceNumber: invoiceNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(invoiceNumber),
       nextDueDate: nextDueDate == null && nullToAbsent
           ? const Value.absent()
           : Value(nextDueDate),
@@ -2508,6 +3149,8 @@ class MaintenanceData extends DataClass implements Insertable<MaintenanceData> {
       odometerKm: serializer.fromJson<double?>(json['odometerKm']),
       title: serializer.fromJson<String>(json['title']),
       cost: serializer.fromJson<int>(json['cost']),
+      workshop: serializer.fromJson<String?>(json['workshop']),
+      invoiceNumber: serializer.fromJson<String?>(json['invoiceNumber']),
       nextDueDate: serializer.fromJson<DateTime?>(json['nextDueDate']),
       nextDueKm: serializer.fromJson<double?>(json['nextDueKm']),
       notes: serializer.fromJson<String?>(json['notes']),
@@ -2525,6 +3168,8 @@ class MaintenanceData extends DataClass implements Insertable<MaintenanceData> {
       'odometerKm': serializer.toJson<double?>(odometerKm),
       'title': serializer.toJson<String>(title),
       'cost': serializer.toJson<int>(cost),
+      'workshop': serializer.toJson<String?>(workshop),
+      'invoiceNumber': serializer.toJson<String?>(invoiceNumber),
       'nextDueDate': serializer.toJson<DateTime?>(nextDueDate),
       'nextDueKm': serializer.toJson<double?>(nextDueKm),
       'notes': serializer.toJson<String?>(notes),
@@ -2540,6 +3185,8 @@ class MaintenanceData extends DataClass implements Insertable<MaintenanceData> {
     Value<double?> odometerKm = const Value.absent(),
     String? title,
     int? cost,
+    Value<String?> workshop = const Value.absent(),
+    Value<String?> invoiceNumber = const Value.absent(),
     Value<DateTime?> nextDueDate = const Value.absent(),
     Value<double?> nextDueKm = const Value.absent(),
     Value<String?> notes = const Value.absent(),
@@ -2552,6 +3199,10 @@ class MaintenanceData extends DataClass implements Insertable<MaintenanceData> {
     odometerKm: odometerKm.present ? odometerKm.value : this.odometerKm,
     title: title ?? this.title,
     cost: cost ?? this.cost,
+    workshop: workshop.present ? workshop.value : this.workshop,
+    invoiceNumber: invoiceNumber.present
+        ? invoiceNumber.value
+        : this.invoiceNumber,
     nextDueDate: nextDueDate.present ? nextDueDate.value : this.nextDueDate,
     nextDueKm: nextDueKm.present ? nextDueKm.value : this.nextDueKm,
     notes: notes.present ? notes.value : this.notes,
@@ -2568,6 +3219,10 @@ class MaintenanceData extends DataClass implements Insertable<MaintenanceData> {
           : this.odometerKm,
       title: data.title.present ? data.title.value : this.title,
       cost: data.cost.present ? data.cost.value : this.cost,
+      workshop: data.workshop.present ? data.workshop.value : this.workshop,
+      invoiceNumber: data.invoiceNumber.present
+          ? data.invoiceNumber.value
+          : this.invoiceNumber,
       nextDueDate: data.nextDueDate.present
           ? data.nextDueDate.value
           : this.nextDueDate,
@@ -2587,6 +3242,8 @@ class MaintenanceData extends DataClass implements Insertable<MaintenanceData> {
           ..write('odometerKm: $odometerKm, ')
           ..write('title: $title, ')
           ..write('cost: $cost, ')
+          ..write('workshop: $workshop, ')
+          ..write('invoiceNumber: $invoiceNumber, ')
           ..write('nextDueDate: $nextDueDate, ')
           ..write('nextDueKm: $nextDueKm, ')
           ..write('notes: $notes, ')
@@ -2604,6 +3261,8 @@ class MaintenanceData extends DataClass implements Insertable<MaintenanceData> {
     odometerKm,
     title,
     cost,
+    workshop,
+    invoiceNumber,
     nextDueDate,
     nextDueKm,
     notes,
@@ -2620,6 +3279,8 @@ class MaintenanceData extends DataClass implements Insertable<MaintenanceData> {
           other.odometerKm == this.odometerKm &&
           other.title == this.title &&
           other.cost == this.cost &&
+          other.workshop == this.workshop &&
+          other.invoiceNumber == this.invoiceNumber &&
           other.nextDueDate == this.nextDueDate &&
           other.nextDueKm == this.nextDueKm &&
           other.notes == this.notes &&
@@ -2634,6 +3295,8 @@ class MaintenanceCompanion extends UpdateCompanion<MaintenanceData> {
   final Value<double?> odometerKm;
   final Value<String> title;
   final Value<int> cost;
+  final Value<String?> workshop;
+  final Value<String?> invoiceNumber;
   final Value<DateTime?> nextDueDate;
   final Value<double?> nextDueKm;
   final Value<String?> notes;
@@ -2646,6 +3309,8 @@ class MaintenanceCompanion extends UpdateCompanion<MaintenanceData> {
     this.odometerKm = const Value.absent(),
     this.title = const Value.absent(),
     this.cost = const Value.absent(),
+    this.workshop = const Value.absent(),
+    this.invoiceNumber = const Value.absent(),
     this.nextDueDate = const Value.absent(),
     this.nextDueKm = const Value.absent(),
     this.notes = const Value.absent(),
@@ -2659,6 +3324,8 @@ class MaintenanceCompanion extends UpdateCompanion<MaintenanceData> {
     this.odometerKm = const Value.absent(),
     required String title,
     required int cost,
+    this.workshop = const Value.absent(),
+    this.invoiceNumber = const Value.absent(),
     this.nextDueDate = const Value.absent(),
     this.nextDueKm = const Value.absent(),
     this.notes = const Value.absent(),
@@ -2675,6 +3342,8 @@ class MaintenanceCompanion extends UpdateCompanion<MaintenanceData> {
     Expression<double>? odometerKm,
     Expression<String>? title,
     Expression<int>? cost,
+    Expression<String>? workshop,
+    Expression<String>? invoiceNumber,
     Expression<DateTime>? nextDueDate,
     Expression<double>? nextDueKm,
     Expression<String>? notes,
@@ -2688,6 +3357,8 @@ class MaintenanceCompanion extends UpdateCompanion<MaintenanceData> {
       if (odometerKm != null) 'odometer_km': odometerKm,
       if (title != null) 'title': title,
       if (cost != null) 'cost': cost,
+      if (workshop != null) 'workshop': workshop,
+      if (invoiceNumber != null) 'invoice_number': invoiceNumber,
       if (nextDueDate != null) 'next_due_date': nextDueDate,
       if (nextDueKm != null) 'next_due_km': nextDueKm,
       if (notes != null) 'notes': notes,
@@ -2703,6 +3374,8 @@ class MaintenanceCompanion extends UpdateCompanion<MaintenanceData> {
     Value<double?>? odometerKm,
     Value<String>? title,
     Value<int>? cost,
+    Value<String?>? workshop,
+    Value<String?>? invoiceNumber,
     Value<DateTime?>? nextDueDate,
     Value<double?>? nextDueKm,
     Value<String?>? notes,
@@ -2716,6 +3389,8 @@ class MaintenanceCompanion extends UpdateCompanion<MaintenanceData> {
       odometerKm: odometerKm ?? this.odometerKm,
       title: title ?? this.title,
       cost: cost ?? this.cost,
+      workshop: workshop ?? this.workshop,
+      invoiceNumber: invoiceNumber ?? this.invoiceNumber,
       nextDueDate: nextDueDate ?? this.nextDueDate,
       nextDueKm: nextDueKm ?? this.nextDueKm,
       notes: notes ?? this.notes,
@@ -2747,6 +3422,12 @@ class MaintenanceCompanion extends UpdateCompanion<MaintenanceData> {
     if (cost.present) {
       map['cost'] = Variable<int>(cost.value);
     }
+    if (workshop.present) {
+      map['workshop'] = Variable<String>(workshop.value);
+    }
+    if (invoiceNumber.present) {
+      map['invoice_number'] = Variable<String>(invoiceNumber.value);
+    }
     if (nextDueDate.present) {
       map['next_due_date'] = Variable<DateTime>(nextDueDate.value);
     }
@@ -2772,6 +3453,8 @@ class MaintenanceCompanion extends UpdateCompanion<MaintenanceData> {
           ..write('odometerKm: $odometerKm, ')
           ..write('title: $title, ')
           ..write('cost: $cost, ')
+          ..write('workshop: $workshop, ')
+          ..write('invoiceNumber: $invoiceNumber, ')
           ..write('nextDueDate: $nextDueDate, ')
           ..write('nextDueKm: $nextDueKm, ')
           ..write('notes: $notes, ')
@@ -3358,6 +4041,35 @@ class $DocumentsTable extends Documents
     requiredDuringInsert: false,
     defaultValue: const Constant(15),
   );
+  static const VerificationMeta _costMeta = const VerificationMeta('cost');
+  @override
+  late final GeneratedColumn<int> cost = GeneratedColumn<int>(
+    'cost',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _entityMeta = const VerificationMeta('entity');
+  @override
+  late final GeneratedColumn<String> entity = GeneratedColumn<String>(
+    'entity',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('vigente'),
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -3381,6 +4093,9 @@ class $DocumentsTable extends Documents
     expiryDate,
     filePath,
     reminderDays,
+    cost,
+    entity,
+    status,
     createdAt,
   ];
   @override
@@ -3457,6 +4172,24 @@ class $DocumentsTable extends Documents
         ),
       );
     }
+    if (data.containsKey('cost')) {
+      context.handle(
+        _costMeta,
+        cost.isAcceptableOrUnknown(data['cost']!, _costMeta),
+      );
+    }
+    if (data.containsKey('entity')) {
+      context.handle(
+        _entityMeta,
+        entity.isAcceptableOrUnknown(data['entity']!, _entityMeta),
+      );
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
@@ -3508,6 +4241,18 @@ class $DocumentsTable extends Documents
         DriftSqlType.int,
         data['${effectivePrefix}reminder_days'],
       )!,
+      cost: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}cost'],
+      )!,
+      entity: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity'],
+      ),
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -3537,6 +4282,15 @@ class Document extends DataClass implements Insertable<Document> {
 
   /// Días de anticipación para la alerta de vencimiento.
   final int reminderDays;
+
+  /// Decisión: monto como entero (unidad mínima de la moneda).
+  final int cost;
+
+  /// Entidad que expide el documento (opcional).
+  final String? entity;
+
+  /// vigente | proximo | vencido.
+  final String status;
   final DateTime createdAt;
   const Document({
     required this.id,
@@ -3548,6 +4302,9 @@ class Document extends DataClass implements Insertable<Document> {
     required this.expiryDate,
     this.filePath,
     required this.reminderDays,
+    required this.cost,
+    this.entity,
+    required this.status,
     required this.createdAt,
   });
   @override
@@ -3568,6 +4325,11 @@ class Document extends DataClass implements Insertable<Document> {
       map['file_path'] = Variable<String>(filePath);
     }
     map['reminder_days'] = Variable<int>(reminderDays);
+    map['cost'] = Variable<int>(cost);
+    if (!nullToAbsent || entity != null) {
+      map['entity'] = Variable<String>(entity);
+    }
+    map['status'] = Variable<String>(status);
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
@@ -3589,6 +4351,11 @@ class Document extends DataClass implements Insertable<Document> {
           ? const Value.absent()
           : Value(filePath),
       reminderDays: Value(reminderDays),
+      cost: Value(cost),
+      entity: entity == null && nullToAbsent
+          ? const Value.absent()
+          : Value(entity),
+      status: Value(status),
       createdAt: Value(createdAt),
     );
   }
@@ -3608,6 +4375,9 @@ class Document extends DataClass implements Insertable<Document> {
       expiryDate: serializer.fromJson<DateTime>(json['expiryDate']),
       filePath: serializer.fromJson<String?>(json['filePath']),
       reminderDays: serializer.fromJson<int>(json['reminderDays']),
+      cost: serializer.fromJson<int>(json['cost']),
+      entity: serializer.fromJson<String?>(json['entity']),
+      status: serializer.fromJson<String>(json['status']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
@@ -3624,6 +4394,9 @@ class Document extends DataClass implements Insertable<Document> {
       'expiryDate': serializer.toJson<DateTime>(expiryDate),
       'filePath': serializer.toJson<String?>(filePath),
       'reminderDays': serializer.toJson<int>(reminderDays),
+      'cost': serializer.toJson<int>(cost),
+      'entity': serializer.toJson<String?>(entity),
+      'status': serializer.toJson<String>(status),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
@@ -3638,6 +4411,9 @@ class Document extends DataClass implements Insertable<Document> {
     DateTime? expiryDate,
     Value<String?> filePath = const Value.absent(),
     int? reminderDays,
+    int? cost,
+    Value<String?> entity = const Value.absent(),
+    String? status,
     DateTime? createdAt,
   }) => Document(
     id: id ?? this.id,
@@ -3649,6 +4425,9 @@ class Document extends DataClass implements Insertable<Document> {
     expiryDate: expiryDate ?? this.expiryDate,
     filePath: filePath.present ? filePath.value : this.filePath,
     reminderDays: reminderDays ?? this.reminderDays,
+    cost: cost ?? this.cost,
+    entity: entity.present ? entity.value : this.entity,
+    status: status ?? this.status,
     createdAt: createdAt ?? this.createdAt,
   );
   Document copyWithCompanion(DocumentsCompanion data) {
@@ -3666,6 +4445,9 @@ class Document extends DataClass implements Insertable<Document> {
       reminderDays: data.reminderDays.present
           ? data.reminderDays.value
           : this.reminderDays,
+      cost: data.cost.present ? data.cost.value : this.cost,
+      entity: data.entity.present ? data.entity.value : this.entity,
+      status: data.status.present ? data.status.value : this.status,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
@@ -3682,6 +4464,9 @@ class Document extends DataClass implements Insertable<Document> {
           ..write('expiryDate: $expiryDate, ')
           ..write('filePath: $filePath, ')
           ..write('reminderDays: $reminderDays, ')
+          ..write('cost: $cost, ')
+          ..write('entity: $entity, ')
+          ..write('status: $status, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
@@ -3698,6 +4483,9 @@ class Document extends DataClass implements Insertable<Document> {
     expiryDate,
     filePath,
     reminderDays,
+    cost,
+    entity,
+    status,
     createdAt,
   );
   @override
@@ -3713,6 +4501,9 @@ class Document extends DataClass implements Insertable<Document> {
           other.expiryDate == this.expiryDate &&
           other.filePath == this.filePath &&
           other.reminderDays == this.reminderDays &&
+          other.cost == this.cost &&
+          other.entity == this.entity &&
+          other.status == this.status &&
           other.createdAt == this.createdAt);
 }
 
@@ -3726,6 +4517,9 @@ class DocumentsCompanion extends UpdateCompanion<Document> {
   final Value<DateTime> expiryDate;
   final Value<String?> filePath;
   final Value<int> reminderDays;
+  final Value<int> cost;
+  final Value<String?> entity;
+  final Value<String> status;
   final Value<DateTime> createdAt;
   const DocumentsCompanion({
     this.id = const Value.absent(),
@@ -3737,6 +4531,9 @@ class DocumentsCompanion extends UpdateCompanion<Document> {
     this.expiryDate = const Value.absent(),
     this.filePath = const Value.absent(),
     this.reminderDays = const Value.absent(),
+    this.cost = const Value.absent(),
+    this.entity = const Value.absent(),
+    this.status = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
   DocumentsCompanion.insert({
@@ -3749,6 +4546,9 @@ class DocumentsCompanion extends UpdateCompanion<Document> {
     required DateTime expiryDate,
     this.filePath = const Value.absent(),
     this.reminderDays = const Value.absent(),
+    this.cost = const Value.absent(),
+    this.entity = const Value.absent(),
+    this.status = const Value.absent(),
     this.createdAt = const Value.absent(),
   }) : vehicleId = Value(vehicleId),
        docType = Value(docType),
@@ -3764,6 +4564,9 @@ class DocumentsCompanion extends UpdateCompanion<Document> {
     Expression<DateTime>? expiryDate,
     Expression<String>? filePath,
     Expression<int>? reminderDays,
+    Expression<int>? cost,
+    Expression<String>? entity,
+    Expression<String>? status,
     Expression<DateTime>? createdAt,
   }) {
     return RawValuesInsertable({
@@ -3776,6 +4579,9 @@ class DocumentsCompanion extends UpdateCompanion<Document> {
       if (expiryDate != null) 'expiry_date': expiryDate,
       if (filePath != null) 'file_path': filePath,
       if (reminderDays != null) 'reminder_days': reminderDays,
+      if (cost != null) 'cost': cost,
+      if (entity != null) 'entity': entity,
+      if (status != null) 'status': status,
       if (createdAt != null) 'created_at': createdAt,
     });
   }
@@ -3790,6 +4596,9 @@ class DocumentsCompanion extends UpdateCompanion<Document> {
     Value<DateTime>? expiryDate,
     Value<String?>? filePath,
     Value<int>? reminderDays,
+    Value<int>? cost,
+    Value<String?>? entity,
+    Value<String>? status,
     Value<DateTime>? createdAt,
   }) {
     return DocumentsCompanion(
@@ -3802,6 +4611,9 @@ class DocumentsCompanion extends UpdateCompanion<Document> {
       expiryDate: expiryDate ?? this.expiryDate,
       filePath: filePath ?? this.filePath,
       reminderDays: reminderDays ?? this.reminderDays,
+      cost: cost ?? this.cost,
+      entity: entity ?? this.entity,
+      status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -3836,6 +4648,15 @@ class DocumentsCompanion extends UpdateCompanion<Document> {
     if (reminderDays.present) {
       map['reminder_days'] = Variable<int>(reminderDays.value);
     }
+    if (cost.present) {
+      map['cost'] = Variable<int>(cost.value);
+    }
+    if (entity.present) {
+      map['entity'] = Variable<String>(entity.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -3854,6 +4675,9 @@ class DocumentsCompanion extends UpdateCompanion<Document> {
           ..write('expiryDate: $expiryDate, ')
           ..write('filePath: $filePath, ')
           ..write('reminderDays: $reminderDays, ')
+          ..write('cost: $cost, ')
+          ..write('entity: $entity, ')
+          ..write('status: $status, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
@@ -3930,6 +4754,17 @@ class $InsuranceTable extends Insurance
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _policyTypeMeta = const VerificationMeta(
+    'policyType',
+  );
+  @override
+  late final GeneratedColumn<String> policyType = GeneratedColumn<String>(
+    'policy_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _startDateMeta = const VerificationMeta(
     'startDate',
   );
@@ -3963,6 +4798,27 @@ class $InsuranceTable extends Insurance
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _paymentFrequencyMeta = const VerificationMeta(
+    'paymentFrequency',
+  );
+  @override
+  late final GeneratedColumn<String> paymentFrequency = GeneratedColumn<String>(
+    'payment_frequency',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('anual'),
+  );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _reminderDaysMeta = const VerificationMeta(
     'reminderDays',
   );
@@ -3994,9 +4850,12 @@ class $InsuranceTable extends Insurance
     provider,
     policyNumber,
     coverage,
+    policyType,
     startDate,
     endDate,
     premium,
+    paymentFrequency,
+    notes,
     reminderDays,
     createdAt,
   ];
@@ -4046,6 +4905,14 @@ class $InsuranceTable extends Insurance
         coverage.isAcceptableOrUnknown(data['coverage']!, _coverageMeta),
       );
     }
+    if (data.containsKey('policy_type')) {
+      context.handle(
+        _policyTypeMeta,
+        policyType.isAcceptableOrUnknown(data['policy_type']!, _policyTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_policyTypeMeta);
+    }
     if (data.containsKey('start_date')) {
       context.handle(
         _startDateMeta,
@@ -4064,6 +4931,21 @@ class $InsuranceTable extends Insurance
       context.handle(
         _premiumMeta,
         premium.isAcceptableOrUnknown(data['premium']!, _premiumMeta),
+      );
+    }
+    if (data.containsKey('payment_frequency')) {
+      context.handle(
+        _paymentFrequencyMeta,
+        paymentFrequency.isAcceptableOrUnknown(
+          data['payment_frequency']!,
+          _paymentFrequencyMeta,
+        ),
+      );
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
       );
     }
     if (data.containsKey('reminder_days')) {
@@ -4110,6 +4992,10 @@ class $InsuranceTable extends Insurance
         DriftSqlType.string,
         data['${effectivePrefix}coverage'],
       ),
+      policyType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}policy_type'],
+      )!,
       startDate: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}start_date'],
@@ -4121,6 +5007,14 @@ class $InsuranceTable extends Insurance
       premium: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}premium'],
+      ),
+      paymentFrequency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payment_frequency'],
+      )!,
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
       ),
       reminderDays: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -4145,11 +5039,18 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
   final String provider;
   final String? policyNumber;
   final String? coverage;
+
+  /// todo_riesgo | responsabilidad_civil | otro.
+  final String policyType;
   final DateTime? startDate;
   final DateTime endDate;
 
   /// Decisión: monto como entero (unidad mínima de la moneda).
   final int? premium;
+
+  /// anual | semestral | trimestral | mensual.
+  final String paymentFrequency;
+  final String? notes;
   final int reminderDays;
   final DateTime createdAt;
   const InsuranceData({
@@ -4158,9 +5059,12 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
     required this.provider,
     this.policyNumber,
     this.coverage,
+    required this.policyType,
     this.startDate,
     required this.endDate,
     this.premium,
+    required this.paymentFrequency,
+    this.notes,
     required this.reminderDays,
     required this.createdAt,
   });
@@ -4176,12 +5080,17 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
     if (!nullToAbsent || coverage != null) {
       map['coverage'] = Variable<String>(coverage);
     }
+    map['policy_type'] = Variable<String>(policyType);
     if (!nullToAbsent || startDate != null) {
       map['start_date'] = Variable<DateTime>(startDate);
     }
     map['end_date'] = Variable<DateTime>(endDate);
     if (!nullToAbsent || premium != null) {
       map['premium'] = Variable<int>(premium);
+    }
+    map['payment_frequency'] = Variable<String>(paymentFrequency);
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
     }
     map['reminder_days'] = Variable<int>(reminderDays);
     map['created_at'] = Variable<DateTime>(createdAt);
@@ -4199,6 +5108,7 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
       coverage: coverage == null && nullToAbsent
           ? const Value.absent()
           : Value(coverage),
+      policyType: Value(policyType),
       startDate: startDate == null && nullToAbsent
           ? const Value.absent()
           : Value(startDate),
@@ -4206,6 +5116,10 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
       premium: premium == null && nullToAbsent
           ? const Value.absent()
           : Value(premium),
+      paymentFrequency: Value(paymentFrequency),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
       reminderDays: Value(reminderDays),
       createdAt: Value(createdAt),
     );
@@ -4222,9 +5136,12 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
       provider: serializer.fromJson<String>(json['provider']),
       policyNumber: serializer.fromJson<String?>(json['policyNumber']),
       coverage: serializer.fromJson<String?>(json['coverage']),
+      policyType: serializer.fromJson<String>(json['policyType']),
       startDate: serializer.fromJson<DateTime?>(json['startDate']),
       endDate: serializer.fromJson<DateTime>(json['endDate']),
       premium: serializer.fromJson<int?>(json['premium']),
+      paymentFrequency: serializer.fromJson<String>(json['paymentFrequency']),
+      notes: serializer.fromJson<String?>(json['notes']),
       reminderDays: serializer.fromJson<int>(json['reminderDays']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
@@ -4238,9 +5155,12 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
       'provider': serializer.toJson<String>(provider),
       'policyNumber': serializer.toJson<String?>(policyNumber),
       'coverage': serializer.toJson<String?>(coverage),
+      'policyType': serializer.toJson<String>(policyType),
       'startDate': serializer.toJson<DateTime?>(startDate),
       'endDate': serializer.toJson<DateTime>(endDate),
       'premium': serializer.toJson<int?>(premium),
+      'paymentFrequency': serializer.toJson<String>(paymentFrequency),
+      'notes': serializer.toJson<String?>(notes),
       'reminderDays': serializer.toJson<int>(reminderDays),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
@@ -4252,9 +5172,12 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
     String? provider,
     Value<String?> policyNumber = const Value.absent(),
     Value<String?> coverage = const Value.absent(),
+    String? policyType,
     Value<DateTime?> startDate = const Value.absent(),
     DateTime? endDate,
     Value<int?> premium = const Value.absent(),
+    String? paymentFrequency,
+    Value<String?> notes = const Value.absent(),
     int? reminderDays,
     DateTime? createdAt,
   }) => InsuranceData(
@@ -4263,9 +5186,12 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
     provider: provider ?? this.provider,
     policyNumber: policyNumber.present ? policyNumber.value : this.policyNumber,
     coverage: coverage.present ? coverage.value : this.coverage,
+    policyType: policyType ?? this.policyType,
     startDate: startDate.present ? startDate.value : this.startDate,
     endDate: endDate ?? this.endDate,
     premium: premium.present ? premium.value : this.premium,
+    paymentFrequency: paymentFrequency ?? this.paymentFrequency,
+    notes: notes.present ? notes.value : this.notes,
     reminderDays: reminderDays ?? this.reminderDays,
     createdAt: createdAt ?? this.createdAt,
   );
@@ -4278,9 +5204,16 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
           ? data.policyNumber.value
           : this.policyNumber,
       coverage: data.coverage.present ? data.coverage.value : this.coverage,
+      policyType: data.policyType.present
+          ? data.policyType.value
+          : this.policyType,
       startDate: data.startDate.present ? data.startDate.value : this.startDate,
       endDate: data.endDate.present ? data.endDate.value : this.endDate,
       premium: data.premium.present ? data.premium.value : this.premium,
+      paymentFrequency: data.paymentFrequency.present
+          ? data.paymentFrequency.value
+          : this.paymentFrequency,
+      notes: data.notes.present ? data.notes.value : this.notes,
       reminderDays: data.reminderDays.present
           ? data.reminderDays.value
           : this.reminderDays,
@@ -4296,9 +5229,12 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
           ..write('provider: $provider, ')
           ..write('policyNumber: $policyNumber, ')
           ..write('coverage: $coverage, ')
+          ..write('policyType: $policyType, ')
           ..write('startDate: $startDate, ')
           ..write('endDate: $endDate, ')
           ..write('premium: $premium, ')
+          ..write('paymentFrequency: $paymentFrequency, ')
+          ..write('notes: $notes, ')
           ..write('reminderDays: $reminderDays, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
@@ -4312,9 +5248,12 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
     provider,
     policyNumber,
     coverage,
+    policyType,
     startDate,
     endDate,
     premium,
+    paymentFrequency,
+    notes,
     reminderDays,
     createdAt,
   );
@@ -4327,9 +5266,12 @@ class InsuranceData extends DataClass implements Insertable<InsuranceData> {
           other.provider == this.provider &&
           other.policyNumber == this.policyNumber &&
           other.coverage == this.coverage &&
+          other.policyType == this.policyType &&
           other.startDate == this.startDate &&
           other.endDate == this.endDate &&
           other.premium == this.premium &&
+          other.paymentFrequency == this.paymentFrequency &&
+          other.notes == this.notes &&
           other.reminderDays == this.reminderDays &&
           other.createdAt == this.createdAt);
 }
@@ -4340,9 +5282,12 @@ class InsuranceCompanion extends UpdateCompanion<InsuranceData> {
   final Value<String> provider;
   final Value<String?> policyNumber;
   final Value<String?> coverage;
+  final Value<String> policyType;
   final Value<DateTime?> startDate;
   final Value<DateTime> endDate;
   final Value<int?> premium;
+  final Value<String> paymentFrequency;
+  final Value<String?> notes;
   final Value<int> reminderDays;
   final Value<DateTime> createdAt;
   const InsuranceCompanion({
@@ -4351,9 +5296,12 @@ class InsuranceCompanion extends UpdateCompanion<InsuranceData> {
     this.provider = const Value.absent(),
     this.policyNumber = const Value.absent(),
     this.coverage = const Value.absent(),
+    this.policyType = const Value.absent(),
     this.startDate = const Value.absent(),
     this.endDate = const Value.absent(),
     this.premium = const Value.absent(),
+    this.paymentFrequency = const Value.absent(),
+    this.notes = const Value.absent(),
     this.reminderDays = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
@@ -4363,13 +5311,17 @@ class InsuranceCompanion extends UpdateCompanion<InsuranceData> {
     required String provider,
     this.policyNumber = const Value.absent(),
     this.coverage = const Value.absent(),
+    required String policyType,
     this.startDate = const Value.absent(),
     required DateTime endDate,
     this.premium = const Value.absent(),
+    this.paymentFrequency = const Value.absent(),
+    this.notes = const Value.absent(),
     this.reminderDays = const Value.absent(),
     this.createdAt = const Value.absent(),
   }) : vehicleId = Value(vehicleId),
        provider = Value(provider),
+       policyType = Value(policyType),
        endDate = Value(endDate);
   static Insertable<InsuranceData> custom({
     Expression<int>? id,
@@ -4377,9 +5329,12 @@ class InsuranceCompanion extends UpdateCompanion<InsuranceData> {
     Expression<String>? provider,
     Expression<String>? policyNumber,
     Expression<String>? coverage,
+    Expression<String>? policyType,
     Expression<DateTime>? startDate,
     Expression<DateTime>? endDate,
     Expression<int>? premium,
+    Expression<String>? paymentFrequency,
+    Expression<String>? notes,
     Expression<int>? reminderDays,
     Expression<DateTime>? createdAt,
   }) {
@@ -4389,9 +5344,12 @@ class InsuranceCompanion extends UpdateCompanion<InsuranceData> {
       if (provider != null) 'provider': provider,
       if (policyNumber != null) 'policy_number': policyNumber,
       if (coverage != null) 'coverage': coverage,
+      if (policyType != null) 'policy_type': policyType,
       if (startDate != null) 'start_date': startDate,
       if (endDate != null) 'end_date': endDate,
       if (premium != null) 'premium': premium,
+      if (paymentFrequency != null) 'payment_frequency': paymentFrequency,
+      if (notes != null) 'notes': notes,
       if (reminderDays != null) 'reminder_days': reminderDays,
       if (createdAt != null) 'created_at': createdAt,
     });
@@ -4403,9 +5361,12 @@ class InsuranceCompanion extends UpdateCompanion<InsuranceData> {
     Value<String>? provider,
     Value<String?>? policyNumber,
     Value<String?>? coverage,
+    Value<String>? policyType,
     Value<DateTime?>? startDate,
     Value<DateTime>? endDate,
     Value<int?>? premium,
+    Value<String>? paymentFrequency,
+    Value<String?>? notes,
     Value<int>? reminderDays,
     Value<DateTime>? createdAt,
   }) {
@@ -4415,9 +5376,12 @@ class InsuranceCompanion extends UpdateCompanion<InsuranceData> {
       provider: provider ?? this.provider,
       policyNumber: policyNumber ?? this.policyNumber,
       coverage: coverage ?? this.coverage,
+      policyType: policyType ?? this.policyType,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       premium: premium ?? this.premium,
+      paymentFrequency: paymentFrequency ?? this.paymentFrequency,
+      notes: notes ?? this.notes,
       reminderDays: reminderDays ?? this.reminderDays,
       createdAt: createdAt ?? this.createdAt,
     );
@@ -4441,6 +5405,9 @@ class InsuranceCompanion extends UpdateCompanion<InsuranceData> {
     if (coverage.present) {
       map['coverage'] = Variable<String>(coverage.value);
     }
+    if (policyType.present) {
+      map['policy_type'] = Variable<String>(policyType.value);
+    }
     if (startDate.present) {
       map['start_date'] = Variable<DateTime>(startDate.value);
     }
@@ -4449,6 +5416,12 @@ class InsuranceCompanion extends UpdateCompanion<InsuranceData> {
     }
     if (premium.present) {
       map['premium'] = Variable<int>(premium.value);
+    }
+    if (paymentFrequency.present) {
+      map['payment_frequency'] = Variable<String>(paymentFrequency.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
     }
     if (reminderDays.present) {
       map['reminder_days'] = Variable<int>(reminderDays.value);
@@ -4467,9 +5440,12 @@ class InsuranceCompanion extends UpdateCompanion<InsuranceData> {
           ..write('provider: $provider, ')
           ..write('policyNumber: $policyNumber, ')
           ..write('coverage: $coverage, ')
+          ..write('policyType: $policyType, ')
           ..write('startDate: $startDate, ')
           ..write('endDate: $endDate, ')
           ..write('premium: $premium, ')
+          ..write('paymentFrequency: $paymentFrequency, ')
+          ..write('notes: $notes, ')
           ..write('reminderDays: $reminderDays, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
@@ -4524,6 +5500,17 @@ class $TaxesTable extends Taxes with TableInfo<$TaxesTable, Taxe> {
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _taxYearMeta = const VerificationMeta(
+    'taxYear',
+  );
+  @override
+  late final GeneratedColumn<int> taxYear = GeneratedColumn<int>(
+    'tax_year',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _amountMeta = const VerificationMeta('amount');
   @override
   late final GeneratedColumn<int> amount = GeneratedColumn<int>(
@@ -4544,6 +5531,16 @@ class $TaxesTable extends Taxes with TableInfo<$TaxesTable, Taxe> {
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('pendiente'),
+  );
   static const VerificationMeta _paidDateMeta = const VerificationMeta(
     'paidDate',
   );
@@ -4553,6 +5550,17 @@ class $TaxesTable extends Taxes with TableInfo<$TaxesTable, Taxe> {
     aliasedName,
     true,
     type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _receiptPathMeta = const VerificationMeta(
+    'receiptPath',
+  );
+  @override
+  late final GeneratedColumn<String> receiptPath = GeneratedColumn<String>(
+    'receipt_path',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _reminderDaysMeta = const VerificationMeta(
@@ -4584,9 +5592,12 @@ class $TaxesTable extends Taxes with TableInfo<$TaxesTable, Taxe> {
     id,
     vehicleId,
     taxType,
+    taxYear,
     amount,
     dueDate,
+    status,
     paidDate,
+    receiptPath,
     reminderDays,
     createdAt,
   ];
@@ -4621,6 +5632,14 @@ class $TaxesTable extends Taxes with TableInfo<$TaxesTable, Taxe> {
     } else if (isInserting) {
       context.missing(_taxTypeMeta);
     }
+    if (data.containsKey('tax_year')) {
+      context.handle(
+        _taxYearMeta,
+        taxYear.isAcceptableOrUnknown(data['tax_year']!, _taxYearMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_taxYearMeta);
+    }
     if (data.containsKey('amount')) {
       context.handle(
         _amountMeta,
@@ -4637,10 +5656,25 @@ class $TaxesTable extends Taxes with TableInfo<$TaxesTable, Taxe> {
     } else if (isInserting) {
       context.missing(_dueDateMeta);
     }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    }
     if (data.containsKey('paid_date')) {
       context.handle(
         _paidDateMeta,
         paidDate.isAcceptableOrUnknown(data['paid_date']!, _paidDateMeta),
+      );
+    }
+    if (data.containsKey('receipt_path')) {
+      context.handle(
+        _receiptPathMeta,
+        receiptPath.isAcceptableOrUnknown(
+          data['receipt_path']!,
+          _receiptPathMeta,
+        ),
       );
     }
     if (data.containsKey('reminder_days')) {
@@ -4679,6 +5713,10 @@ class $TaxesTable extends Taxes with TableInfo<$TaxesTable, Taxe> {
         DriftSqlType.string,
         data['${effectivePrefix}tax_type'],
       )!,
+      taxYear: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}tax_year'],
+      )!,
       amount: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}amount'],
@@ -4687,9 +5725,17 @@ class $TaxesTable extends Taxes with TableInfo<$TaxesTable, Taxe> {
         DriftSqlType.dateTime,
         data['${effectivePrefix}due_date'],
       )!,
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
       paidDate: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}paid_date'],
+      ),
+      receiptPath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}receipt_path'],
       ),
       reminderDays: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -4713,21 +5759,33 @@ class Taxe extends DataClass implements Insertable<Taxe> {
   final int vehicleId;
   final String taxType;
 
+  /// Año fiscal del impuesto (ej. 2026).
+  final int taxYear;
+
   /// Decisión: monto como entero (unidad mínima de la moneda).
   final int amount;
   final DateTime dueDate;
 
+  /// pendiente | pagado | vencido.
+  final String status;
+
   /// Nullable: null = impuesto aún no pagado.
   final DateTime? paidDate;
+
+  /// Ruta relativa del comprobante de pago dentro de `app_documents/...`.
+  final String? receiptPath;
   final int reminderDays;
   final DateTime createdAt;
   const Taxe({
     required this.id,
     required this.vehicleId,
     required this.taxType,
+    required this.taxYear,
     required this.amount,
     required this.dueDate,
+    required this.status,
     this.paidDate,
+    this.receiptPath,
     required this.reminderDays,
     required this.createdAt,
   });
@@ -4737,10 +5795,15 @@ class Taxe extends DataClass implements Insertable<Taxe> {
     map['id'] = Variable<int>(id);
     map['vehicle_id'] = Variable<int>(vehicleId);
     map['tax_type'] = Variable<String>(taxType);
+    map['tax_year'] = Variable<int>(taxYear);
     map['amount'] = Variable<int>(amount);
     map['due_date'] = Variable<DateTime>(dueDate);
+    map['status'] = Variable<String>(status);
     if (!nullToAbsent || paidDate != null) {
       map['paid_date'] = Variable<DateTime>(paidDate);
+    }
+    if (!nullToAbsent || receiptPath != null) {
+      map['receipt_path'] = Variable<String>(receiptPath);
     }
     map['reminder_days'] = Variable<int>(reminderDays);
     map['created_at'] = Variable<DateTime>(createdAt);
@@ -4752,11 +5815,16 @@ class Taxe extends DataClass implements Insertable<Taxe> {
       id: Value(id),
       vehicleId: Value(vehicleId),
       taxType: Value(taxType),
+      taxYear: Value(taxYear),
       amount: Value(amount),
       dueDate: Value(dueDate),
+      status: Value(status),
       paidDate: paidDate == null && nullToAbsent
           ? const Value.absent()
           : Value(paidDate),
+      receiptPath: receiptPath == null && nullToAbsent
+          ? const Value.absent()
+          : Value(receiptPath),
       reminderDays: Value(reminderDays),
       createdAt: Value(createdAt),
     );
@@ -4771,9 +5839,12 @@ class Taxe extends DataClass implements Insertable<Taxe> {
       id: serializer.fromJson<int>(json['id']),
       vehicleId: serializer.fromJson<int>(json['vehicleId']),
       taxType: serializer.fromJson<String>(json['taxType']),
+      taxYear: serializer.fromJson<int>(json['taxYear']),
       amount: serializer.fromJson<int>(json['amount']),
       dueDate: serializer.fromJson<DateTime>(json['dueDate']),
+      status: serializer.fromJson<String>(json['status']),
       paidDate: serializer.fromJson<DateTime?>(json['paidDate']),
+      receiptPath: serializer.fromJson<String?>(json['receiptPath']),
       reminderDays: serializer.fromJson<int>(json['reminderDays']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
@@ -4785,9 +5856,12 @@ class Taxe extends DataClass implements Insertable<Taxe> {
       'id': serializer.toJson<int>(id),
       'vehicleId': serializer.toJson<int>(vehicleId),
       'taxType': serializer.toJson<String>(taxType),
+      'taxYear': serializer.toJson<int>(taxYear),
       'amount': serializer.toJson<int>(amount),
       'dueDate': serializer.toJson<DateTime>(dueDate),
+      'status': serializer.toJson<String>(status),
       'paidDate': serializer.toJson<DateTime?>(paidDate),
+      'receiptPath': serializer.toJson<String?>(receiptPath),
       'reminderDays': serializer.toJson<int>(reminderDays),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
@@ -4797,18 +5871,24 @@ class Taxe extends DataClass implements Insertable<Taxe> {
     int? id,
     int? vehicleId,
     String? taxType,
+    int? taxYear,
     int? amount,
     DateTime? dueDate,
+    String? status,
     Value<DateTime?> paidDate = const Value.absent(),
+    Value<String?> receiptPath = const Value.absent(),
     int? reminderDays,
     DateTime? createdAt,
   }) => Taxe(
     id: id ?? this.id,
     vehicleId: vehicleId ?? this.vehicleId,
     taxType: taxType ?? this.taxType,
+    taxYear: taxYear ?? this.taxYear,
     amount: amount ?? this.amount,
     dueDate: dueDate ?? this.dueDate,
+    status: status ?? this.status,
     paidDate: paidDate.present ? paidDate.value : this.paidDate,
+    receiptPath: receiptPath.present ? receiptPath.value : this.receiptPath,
     reminderDays: reminderDays ?? this.reminderDays,
     createdAt: createdAt ?? this.createdAt,
   );
@@ -4817,9 +5897,14 @@ class Taxe extends DataClass implements Insertable<Taxe> {
       id: data.id.present ? data.id.value : this.id,
       vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
       taxType: data.taxType.present ? data.taxType.value : this.taxType,
+      taxYear: data.taxYear.present ? data.taxYear.value : this.taxYear,
       amount: data.amount.present ? data.amount.value : this.amount,
       dueDate: data.dueDate.present ? data.dueDate.value : this.dueDate,
+      status: data.status.present ? data.status.value : this.status,
       paidDate: data.paidDate.present ? data.paidDate.value : this.paidDate,
+      receiptPath: data.receiptPath.present
+          ? data.receiptPath.value
+          : this.receiptPath,
       reminderDays: data.reminderDays.present
           ? data.reminderDays.value
           : this.reminderDays,
@@ -4833,9 +5918,12 @@ class Taxe extends DataClass implements Insertable<Taxe> {
           ..write('id: $id, ')
           ..write('vehicleId: $vehicleId, ')
           ..write('taxType: $taxType, ')
+          ..write('taxYear: $taxYear, ')
           ..write('amount: $amount, ')
           ..write('dueDate: $dueDate, ')
+          ..write('status: $status, ')
           ..write('paidDate: $paidDate, ')
+          ..write('receiptPath: $receiptPath, ')
           ..write('reminderDays: $reminderDays, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
@@ -4847,9 +5935,12 @@ class Taxe extends DataClass implements Insertable<Taxe> {
     id,
     vehicleId,
     taxType,
+    taxYear,
     amount,
     dueDate,
+    status,
     paidDate,
+    receiptPath,
     reminderDays,
     createdAt,
   );
@@ -4860,9 +5951,12 @@ class Taxe extends DataClass implements Insertable<Taxe> {
           other.id == this.id &&
           other.vehicleId == this.vehicleId &&
           other.taxType == this.taxType &&
+          other.taxYear == this.taxYear &&
           other.amount == this.amount &&
           other.dueDate == this.dueDate &&
+          other.status == this.status &&
           other.paidDate == this.paidDate &&
+          other.receiptPath == this.receiptPath &&
           other.reminderDays == this.reminderDays &&
           other.createdAt == this.createdAt);
 }
@@ -4871,18 +5965,24 @@ class TaxesCompanion extends UpdateCompanion<Taxe> {
   final Value<int> id;
   final Value<int> vehicleId;
   final Value<String> taxType;
+  final Value<int> taxYear;
   final Value<int> amount;
   final Value<DateTime> dueDate;
+  final Value<String> status;
   final Value<DateTime?> paidDate;
+  final Value<String?> receiptPath;
   final Value<int> reminderDays;
   final Value<DateTime> createdAt;
   const TaxesCompanion({
     this.id = const Value.absent(),
     this.vehicleId = const Value.absent(),
     this.taxType = const Value.absent(),
+    this.taxYear = const Value.absent(),
     this.amount = const Value.absent(),
     this.dueDate = const Value.absent(),
+    this.status = const Value.absent(),
     this.paidDate = const Value.absent(),
+    this.receiptPath = const Value.absent(),
     this.reminderDays = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
@@ -4890,22 +5990,29 @@ class TaxesCompanion extends UpdateCompanion<Taxe> {
     this.id = const Value.absent(),
     required int vehicleId,
     required String taxType,
+    required int taxYear,
     required int amount,
     required DateTime dueDate,
+    this.status = const Value.absent(),
     this.paidDate = const Value.absent(),
+    this.receiptPath = const Value.absent(),
     this.reminderDays = const Value.absent(),
     this.createdAt = const Value.absent(),
   }) : vehicleId = Value(vehicleId),
        taxType = Value(taxType),
+       taxYear = Value(taxYear),
        amount = Value(amount),
        dueDate = Value(dueDate);
   static Insertable<Taxe> custom({
     Expression<int>? id,
     Expression<int>? vehicleId,
     Expression<String>? taxType,
+    Expression<int>? taxYear,
     Expression<int>? amount,
     Expression<DateTime>? dueDate,
+    Expression<String>? status,
     Expression<DateTime>? paidDate,
+    Expression<String>? receiptPath,
     Expression<int>? reminderDays,
     Expression<DateTime>? createdAt,
   }) {
@@ -4913,9 +6020,12 @@ class TaxesCompanion extends UpdateCompanion<Taxe> {
       if (id != null) 'id': id,
       if (vehicleId != null) 'vehicle_id': vehicleId,
       if (taxType != null) 'tax_type': taxType,
+      if (taxYear != null) 'tax_year': taxYear,
       if (amount != null) 'amount': amount,
       if (dueDate != null) 'due_date': dueDate,
+      if (status != null) 'status': status,
       if (paidDate != null) 'paid_date': paidDate,
+      if (receiptPath != null) 'receipt_path': receiptPath,
       if (reminderDays != null) 'reminder_days': reminderDays,
       if (createdAt != null) 'created_at': createdAt,
     });
@@ -4925,9 +6035,12 @@ class TaxesCompanion extends UpdateCompanion<Taxe> {
     Value<int>? id,
     Value<int>? vehicleId,
     Value<String>? taxType,
+    Value<int>? taxYear,
     Value<int>? amount,
     Value<DateTime>? dueDate,
+    Value<String>? status,
     Value<DateTime?>? paidDate,
+    Value<String?>? receiptPath,
     Value<int>? reminderDays,
     Value<DateTime>? createdAt,
   }) {
@@ -4935,9 +6048,12 @@ class TaxesCompanion extends UpdateCompanion<Taxe> {
       id: id ?? this.id,
       vehicleId: vehicleId ?? this.vehicleId,
       taxType: taxType ?? this.taxType,
+      taxYear: taxYear ?? this.taxYear,
       amount: amount ?? this.amount,
       dueDate: dueDate ?? this.dueDate,
+      status: status ?? this.status,
       paidDate: paidDate ?? this.paidDate,
+      receiptPath: receiptPath ?? this.receiptPath,
       reminderDays: reminderDays ?? this.reminderDays,
       createdAt: createdAt ?? this.createdAt,
     );
@@ -4955,14 +6071,23 @@ class TaxesCompanion extends UpdateCompanion<Taxe> {
     if (taxType.present) {
       map['tax_type'] = Variable<String>(taxType.value);
     }
+    if (taxYear.present) {
+      map['tax_year'] = Variable<int>(taxYear.value);
+    }
     if (amount.present) {
       map['amount'] = Variable<int>(amount.value);
     }
     if (dueDate.present) {
       map['due_date'] = Variable<DateTime>(dueDate.value);
     }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
     if (paidDate.present) {
       map['paid_date'] = Variable<DateTime>(paidDate.value);
+    }
+    if (receiptPath.present) {
+      map['receipt_path'] = Variable<String>(receiptPath.value);
     }
     if (reminderDays.present) {
       map['reminder_days'] = Variable<int>(reminderDays.value);
@@ -4979,9 +6104,12 @@ class TaxesCompanion extends UpdateCompanion<Taxe> {
           ..write('id: $id, ')
           ..write('vehicleId: $vehicleId, ')
           ..write('taxType: $taxType, ')
+          ..write('taxYear: $taxYear, ')
           ..write('amount: $amount, ')
           ..write('dueDate: $dueDate, ')
+          ..write('status: $status, ')
           ..write('paidDate: $paidDate, ')
+          ..write('receiptPath: $receiptPath, ')
           ..write('reminderDays: $reminderDays, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
@@ -5006,6 +6134,18 @@ class $NotificationsTable extends Notifications
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
       'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES users (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
@@ -5103,6 +6243,19 @@ class $NotificationsTable extends Notifications
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _isReadMeta = const VerificationMeta('isRead');
+  @override
+  late final GeneratedColumn<bool> isRead = GeneratedColumn<bool>(
+    'is_read',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_read" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -5118,6 +6271,7 @@ class $NotificationsTable extends Notifications
   @override
   List<GeneratedColumn> get $columns => [
     id,
+    userId,
     vehicleId,
     type,
     title,
@@ -5126,6 +6280,7 @@ class $NotificationsTable extends Notifications
     relatedId,
     scheduledAt,
     isSent,
+    isRead,
     createdAt,
   ];
   @override
@@ -5142,6 +6297,14 @@ class $NotificationsTable extends Notifications
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
     }
     if (data.containsKey('vehicle_id')) {
       context.handle(
@@ -5201,6 +6364,12 @@ class $NotificationsTable extends Notifications
         isSent.isAcceptableOrUnknown(data['is_sent']!, _isSentMeta),
       );
     }
+    if (data.containsKey('is_read')) {
+      context.handle(
+        _isReadMeta,
+        isRead.isAcceptableOrUnknown(data['is_read']!, _isReadMeta),
+      );
+    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
@@ -5219,6 +6388,10 @@ class $NotificationsTable extends Notifications
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}user_id'],
       )!,
       vehicleId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -5252,6 +6425,10 @@ class $NotificationsTable extends Notifications
         DriftSqlType.bool,
         data['${effectivePrefix}is_sent'],
       )!,
+      isRead: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_read'],
+      )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -5267,6 +6444,7 @@ class $NotificationsTable extends Notifications
 
 class Notification extends DataClass implements Insertable<Notification> {
   final int id;
+  final int userId;
 
   /// Nullable: alertas globales que no dependen de un vehículo.
   final int? vehicleId;
@@ -5277,9 +6455,13 @@ class Notification extends DataClass implements Insertable<Notification> {
   final int? relatedId;
   final DateTime? scheduledAt;
   final bool isSent;
+
+  /// true si el usuario ya leyó la notificación (badge de no leídas).
+  final bool isRead;
   final DateTime createdAt;
   const Notification({
     required this.id,
+    required this.userId,
     this.vehicleId,
     required this.type,
     required this.title,
@@ -5288,12 +6470,14 @@ class Notification extends DataClass implements Insertable<Notification> {
     this.relatedId,
     this.scheduledAt,
     required this.isSent,
+    required this.isRead,
     required this.createdAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    map['user_id'] = Variable<int>(userId);
     if (!nullToAbsent || vehicleId != null) {
       map['vehicle_id'] = Variable<int>(vehicleId);
     }
@@ -5312,6 +6496,7 @@ class Notification extends DataClass implements Insertable<Notification> {
       map['scheduled_at'] = Variable<DateTime>(scheduledAt);
     }
     map['is_sent'] = Variable<bool>(isSent);
+    map['is_read'] = Variable<bool>(isRead);
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
@@ -5319,6 +6504,7 @@ class Notification extends DataClass implements Insertable<Notification> {
   NotificationsCompanion toCompanion(bool nullToAbsent) {
     return NotificationsCompanion(
       id: Value(id),
+      userId: Value(userId),
       vehicleId: vehicleId == null && nullToAbsent
           ? const Value.absent()
           : Value(vehicleId),
@@ -5335,6 +6521,7 @@ class Notification extends DataClass implements Insertable<Notification> {
           ? const Value.absent()
           : Value(scheduledAt),
       isSent: Value(isSent),
+      isRead: Value(isRead),
       createdAt: Value(createdAt),
     );
   }
@@ -5346,6 +6533,7 @@ class Notification extends DataClass implements Insertable<Notification> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Notification(
       id: serializer.fromJson<int>(json['id']),
+      userId: serializer.fromJson<int>(json['userId']),
       vehicleId: serializer.fromJson<int?>(json['vehicleId']),
       type: serializer.fromJson<String>(json['type']),
       title: serializer.fromJson<String>(json['title']),
@@ -5354,6 +6542,7 @@ class Notification extends DataClass implements Insertable<Notification> {
       relatedId: serializer.fromJson<int?>(json['relatedId']),
       scheduledAt: serializer.fromJson<DateTime?>(json['scheduledAt']),
       isSent: serializer.fromJson<bool>(json['isSent']),
+      isRead: serializer.fromJson<bool>(json['isRead']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
@@ -5362,6 +6551,7 @@ class Notification extends DataClass implements Insertable<Notification> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'userId': serializer.toJson<int>(userId),
       'vehicleId': serializer.toJson<int?>(vehicleId),
       'type': serializer.toJson<String>(type),
       'title': serializer.toJson<String>(title),
@@ -5370,12 +6560,14 @@ class Notification extends DataClass implements Insertable<Notification> {
       'relatedId': serializer.toJson<int?>(relatedId),
       'scheduledAt': serializer.toJson<DateTime?>(scheduledAt),
       'isSent': serializer.toJson<bool>(isSent),
+      'isRead': serializer.toJson<bool>(isRead),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
 
   Notification copyWith({
     int? id,
+    int? userId,
     Value<int?> vehicleId = const Value.absent(),
     String? type,
     String? title,
@@ -5384,9 +6576,11 @@ class Notification extends DataClass implements Insertable<Notification> {
     Value<int?> relatedId = const Value.absent(),
     Value<DateTime?> scheduledAt = const Value.absent(),
     bool? isSent,
+    bool? isRead,
     DateTime? createdAt,
   }) => Notification(
     id: id ?? this.id,
+    userId: userId ?? this.userId,
     vehicleId: vehicleId.present ? vehicleId.value : this.vehicleId,
     type: type ?? this.type,
     title: title ?? this.title,
@@ -5397,11 +6591,13 @@ class Notification extends DataClass implements Insertable<Notification> {
     relatedId: relatedId.present ? relatedId.value : this.relatedId,
     scheduledAt: scheduledAt.present ? scheduledAt.value : this.scheduledAt,
     isSent: isSent ?? this.isSent,
+    isRead: isRead ?? this.isRead,
     createdAt: createdAt ?? this.createdAt,
   );
   Notification copyWithCompanion(NotificationsCompanion data) {
     return Notification(
       id: data.id.present ? data.id.value : this.id,
+      userId: data.userId.present ? data.userId.value : this.userId,
       vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
       type: data.type.present ? data.type.value : this.type,
       title: data.title.present ? data.title.value : this.title,
@@ -5414,6 +6610,7 @@ class Notification extends DataClass implements Insertable<Notification> {
           ? data.scheduledAt.value
           : this.scheduledAt,
       isSent: data.isSent.present ? data.isSent.value : this.isSent,
+      isRead: data.isRead.present ? data.isRead.value : this.isRead,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
@@ -5422,6 +6619,7 @@ class Notification extends DataClass implements Insertable<Notification> {
   String toString() {
     return (StringBuffer('Notification(')
           ..write('id: $id, ')
+          ..write('userId: $userId, ')
           ..write('vehicleId: $vehicleId, ')
           ..write('type: $type, ')
           ..write('title: $title, ')
@@ -5430,6 +6628,7 @@ class Notification extends DataClass implements Insertable<Notification> {
           ..write('relatedId: $relatedId, ')
           ..write('scheduledAt: $scheduledAt, ')
           ..write('isSent: $isSent, ')
+          ..write('isRead: $isRead, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
@@ -5438,6 +6637,7 @@ class Notification extends DataClass implements Insertable<Notification> {
   @override
   int get hashCode => Object.hash(
     id,
+    userId,
     vehicleId,
     type,
     title,
@@ -5446,6 +6646,7 @@ class Notification extends DataClass implements Insertable<Notification> {
     relatedId,
     scheduledAt,
     isSent,
+    isRead,
     createdAt,
   );
   @override
@@ -5453,6 +6654,7 @@ class Notification extends DataClass implements Insertable<Notification> {
       identical(this, other) ||
       (other is Notification &&
           other.id == this.id &&
+          other.userId == this.userId &&
           other.vehicleId == this.vehicleId &&
           other.type == this.type &&
           other.title == this.title &&
@@ -5461,11 +6663,13 @@ class Notification extends DataClass implements Insertable<Notification> {
           other.relatedId == this.relatedId &&
           other.scheduledAt == this.scheduledAt &&
           other.isSent == this.isSent &&
+          other.isRead == this.isRead &&
           other.createdAt == this.createdAt);
 }
 
 class NotificationsCompanion extends UpdateCompanion<Notification> {
   final Value<int> id;
+  final Value<int> userId;
   final Value<int?> vehicleId;
   final Value<String> type;
   final Value<String> title;
@@ -5474,9 +6678,11 @@ class NotificationsCompanion extends UpdateCompanion<Notification> {
   final Value<int?> relatedId;
   final Value<DateTime?> scheduledAt;
   final Value<bool> isSent;
+  final Value<bool> isRead;
   final Value<DateTime> createdAt;
   const NotificationsCompanion({
     this.id = const Value.absent(),
+    this.userId = const Value.absent(),
     this.vehicleId = const Value.absent(),
     this.type = const Value.absent(),
     this.title = const Value.absent(),
@@ -5485,10 +6691,12 @@ class NotificationsCompanion extends UpdateCompanion<Notification> {
     this.relatedId = const Value.absent(),
     this.scheduledAt = const Value.absent(),
     this.isSent = const Value.absent(),
+    this.isRead = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
   NotificationsCompanion.insert({
     this.id = const Value.absent(),
+    required int userId,
     this.vehicleId = const Value.absent(),
     required String type,
     required String title,
@@ -5497,11 +6705,14 @@ class NotificationsCompanion extends UpdateCompanion<Notification> {
     this.relatedId = const Value.absent(),
     this.scheduledAt = const Value.absent(),
     this.isSent = const Value.absent(),
+    this.isRead = const Value.absent(),
     this.createdAt = const Value.absent(),
-  }) : type = Value(type),
+  }) : userId = Value(userId),
+       type = Value(type),
        title = Value(title);
   static Insertable<Notification> custom({
     Expression<int>? id,
+    Expression<int>? userId,
     Expression<int>? vehicleId,
     Expression<String>? type,
     Expression<String>? title,
@@ -5510,10 +6721,12 @@ class NotificationsCompanion extends UpdateCompanion<Notification> {
     Expression<int>? relatedId,
     Expression<DateTime>? scheduledAt,
     Expression<bool>? isSent,
+    Expression<bool>? isRead,
     Expression<DateTime>? createdAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (userId != null) 'user_id': userId,
       if (vehicleId != null) 'vehicle_id': vehicleId,
       if (type != null) 'type': type,
       if (title != null) 'title': title,
@@ -5522,12 +6735,14 @@ class NotificationsCompanion extends UpdateCompanion<Notification> {
       if (relatedId != null) 'related_id': relatedId,
       if (scheduledAt != null) 'scheduled_at': scheduledAt,
       if (isSent != null) 'is_sent': isSent,
+      if (isRead != null) 'is_read': isRead,
       if (createdAt != null) 'created_at': createdAt,
     });
   }
 
   NotificationsCompanion copyWith({
     Value<int>? id,
+    Value<int>? userId,
     Value<int?>? vehicleId,
     Value<String>? type,
     Value<String>? title,
@@ -5536,10 +6751,12 @@ class NotificationsCompanion extends UpdateCompanion<Notification> {
     Value<int?>? relatedId,
     Value<DateTime?>? scheduledAt,
     Value<bool>? isSent,
+    Value<bool>? isRead,
     Value<DateTime>? createdAt,
   }) {
     return NotificationsCompanion(
       id: id ?? this.id,
+      userId: userId ?? this.userId,
       vehicleId: vehicleId ?? this.vehicleId,
       type: type ?? this.type,
       title: title ?? this.title,
@@ -5548,6 +6765,7 @@ class NotificationsCompanion extends UpdateCompanion<Notification> {
       relatedId: relatedId ?? this.relatedId,
       scheduledAt: scheduledAt ?? this.scheduledAt,
       isSent: isSent ?? this.isSent,
+      isRead: isRead ?? this.isRead,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -5557,6 +6775,9 @@ class NotificationsCompanion extends UpdateCompanion<Notification> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
     }
     if (vehicleId.present) {
       map['vehicle_id'] = Variable<int>(vehicleId.value);
@@ -5582,6 +6803,9 @@ class NotificationsCompanion extends UpdateCompanion<Notification> {
     if (isSent.present) {
       map['is_sent'] = Variable<bool>(isSent.value);
     }
+    if (isRead.present) {
+      map['is_read'] = Variable<bool>(isRead.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -5592,6 +6816,7 @@ class NotificationsCompanion extends UpdateCompanion<Notification> {
   String toString() {
     return (StringBuffer('NotificationsCompanion(')
           ..write('id: $id, ')
+          ..write('userId: $userId, ')
           ..write('vehicleId: $vehicleId, ')
           ..write('type: $type, ')
           ..write('title: $title, ')
@@ -5600,6 +6825,7 @@ class NotificationsCompanion extends UpdateCompanion<Notification> {
           ..write('relatedId: $relatedId, ')
           ..write('scheduledAt: $scheduledAt, ')
           ..write('isSent: $isSent, ')
+          ..write('isRead: $isRead, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
@@ -5671,6 +6897,17 @@ class $AttachmentsTable extends Attachments
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _sizeBytesMeta = const VerificationMeta(
+    'sizeBytes',
+  );
+  @override
+  late final GeneratedColumn<int> sizeBytes = GeneratedColumn<int>(
+    'size_bytes',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -5690,6 +6927,7 @@ class $AttachmentsTable extends Attachments
     entityId,
     path,
     mimeType,
+    sizeBytes,
     createdAt,
   ];
   @override
@@ -5737,6 +6975,14 @@ class $AttachmentsTable extends Attachments
         mimeType.isAcceptableOrUnknown(data['mime_type']!, _mimeTypeMeta),
       );
     }
+    if (data.containsKey('size_bytes')) {
+      context.handle(
+        _sizeBytesMeta,
+        sizeBytes.isAcceptableOrUnknown(data['size_bytes']!, _sizeBytesMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sizeBytesMeta);
+    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
@@ -5772,6 +7018,10 @@ class $AttachmentsTable extends Attachments
         DriftSqlType.string,
         data['${effectivePrefix}mime_type'],
       ),
+      sizeBytes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}size_bytes'],
+      )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -5795,6 +7045,9 @@ class Attachment extends DataClass implements Insertable<Attachment> {
   /// Ruta relativa dentro de `app_documents/...`. Nunca rutas absolutas.
   final String path;
   final String? mimeType;
+
+  /// Tamaño del archivo en bytes.
+  final int sizeBytes;
   final DateTime createdAt;
   const Attachment({
     required this.id,
@@ -5802,6 +7055,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
     required this.entityId,
     required this.path,
     this.mimeType,
+    required this.sizeBytes,
     required this.createdAt,
   });
   @override
@@ -5814,6 +7068,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
     if (!nullToAbsent || mimeType != null) {
       map['mime_type'] = Variable<String>(mimeType);
     }
+    map['size_bytes'] = Variable<int>(sizeBytes);
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
@@ -5827,6 +7082,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
       mimeType: mimeType == null && nullToAbsent
           ? const Value.absent()
           : Value(mimeType),
+      sizeBytes: Value(sizeBytes),
       createdAt: Value(createdAt),
     );
   }
@@ -5842,6 +7098,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
       entityId: serializer.fromJson<int>(json['entityId']),
       path: serializer.fromJson<String>(json['path']),
       mimeType: serializer.fromJson<String?>(json['mimeType']),
+      sizeBytes: serializer.fromJson<int>(json['sizeBytes']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
@@ -5854,6 +7111,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
       'entityId': serializer.toJson<int>(entityId),
       'path': serializer.toJson<String>(path),
       'mimeType': serializer.toJson<String?>(mimeType),
+      'sizeBytes': serializer.toJson<int>(sizeBytes),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
@@ -5864,6 +7122,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
     int? entityId,
     String? path,
     Value<String?> mimeType = const Value.absent(),
+    int? sizeBytes,
     DateTime? createdAt,
   }) => Attachment(
     id: id ?? this.id,
@@ -5871,6 +7130,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
     entityId: entityId ?? this.entityId,
     path: path ?? this.path,
     mimeType: mimeType.present ? mimeType.value : this.mimeType,
+    sizeBytes: sizeBytes ?? this.sizeBytes,
     createdAt: createdAt ?? this.createdAt,
   );
   Attachment copyWithCompanion(AttachmentsCompanion data) {
@@ -5882,6 +7142,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
       entityId: data.entityId.present ? data.entityId.value : this.entityId,
       path: data.path.present ? data.path.value : this.path,
       mimeType: data.mimeType.present ? data.mimeType.value : this.mimeType,
+      sizeBytes: data.sizeBytes.present ? data.sizeBytes.value : this.sizeBytes,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
@@ -5894,14 +7155,22 @@ class Attachment extends DataClass implements Insertable<Attachment> {
           ..write('entityId: $entityId, ')
           ..write('path: $path, ')
           ..write('mimeType: $mimeType, ')
+          ..write('sizeBytes: $sizeBytes, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, entityType, entityId, path, mimeType, createdAt);
+  int get hashCode => Object.hash(
+    id,
+    entityType,
+    entityId,
+    path,
+    mimeType,
+    sizeBytes,
+    createdAt,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -5911,6 +7180,7 @@ class Attachment extends DataClass implements Insertable<Attachment> {
           other.entityId == this.entityId &&
           other.path == this.path &&
           other.mimeType == this.mimeType &&
+          other.sizeBytes == this.sizeBytes &&
           other.createdAt == this.createdAt);
 }
 
@@ -5920,6 +7190,7 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
   final Value<int> entityId;
   final Value<String> path;
   final Value<String?> mimeType;
+  final Value<int> sizeBytes;
   final Value<DateTime> createdAt;
   const AttachmentsCompanion({
     this.id = const Value.absent(),
@@ -5927,6 +7198,7 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
     this.entityId = const Value.absent(),
     this.path = const Value.absent(),
     this.mimeType = const Value.absent(),
+    this.sizeBytes = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
   AttachmentsCompanion.insert({
@@ -5935,16 +7207,19 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
     required int entityId,
     required String path,
     this.mimeType = const Value.absent(),
+    required int sizeBytes,
     this.createdAt = const Value.absent(),
   }) : entityType = Value(entityType),
        entityId = Value(entityId),
-       path = Value(path);
+       path = Value(path),
+       sizeBytes = Value(sizeBytes);
   static Insertable<Attachment> custom({
     Expression<int>? id,
     Expression<String>? entityType,
     Expression<int>? entityId,
     Expression<String>? path,
     Expression<String>? mimeType,
+    Expression<int>? sizeBytes,
     Expression<DateTime>? createdAt,
   }) {
     return RawValuesInsertable({
@@ -5953,6 +7228,7 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
       if (entityId != null) 'entity_id': entityId,
       if (path != null) 'path': path,
       if (mimeType != null) 'mime_type': mimeType,
+      if (sizeBytes != null) 'size_bytes': sizeBytes,
       if (createdAt != null) 'created_at': createdAt,
     });
   }
@@ -5963,6 +7239,7 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
     Value<int>? entityId,
     Value<String>? path,
     Value<String?>? mimeType,
+    Value<int>? sizeBytes,
     Value<DateTime>? createdAt,
   }) {
     return AttachmentsCompanion(
@@ -5971,6 +7248,7 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
       entityId: entityId ?? this.entityId,
       path: path ?? this.path,
       mimeType: mimeType ?? this.mimeType,
+      sizeBytes: sizeBytes ?? this.sizeBytes,
       createdAt: createdAt ?? this.createdAt,
     );
   }
@@ -5993,6 +7271,9 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
     if (mimeType.present) {
       map['mime_type'] = Variable<String>(mimeType.value);
     }
+    if (sizeBytes.present) {
+      map['size_bytes'] = Variable<int>(sizeBytes.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -6007,6 +7288,7 @@ class AttachmentsCompanion extends UpdateCompanion<Attachment> {
           ..write('entityId: $entityId, ')
           ..write('path: $path, ')
           ..write('mimeType: $mimeType, ')
+          ..write('sizeBytes: $sizeBytes, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
@@ -6031,6 +7313,15 @@ class $ActivityLogsTable extends ActivityLogs
     defaultConstraints: GeneratedColumn.constraintIsAlways(
       'PRIMARY KEY AUTOINCREMENT',
     ),
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
   );
   static const VerificationMeta _actionMeta = const VerificationMeta('action');
   @override
@@ -6095,6 +7386,7 @@ class $ActivityLogsTable extends ActivityLogs
   @override
   List<GeneratedColumn> get $columns => [
     id,
+    userId,
     action,
     entityType,
     entityId,
@@ -6115,6 +7407,14 @@ class $ActivityLogsTable extends ActivityLogs
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
     }
     if (data.containsKey('action')) {
       context.handle(
@@ -6163,6 +7463,10 @@ class $ActivityLogsTable extends ActivityLogs
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}user_id'],
+      )!,
       action: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}action'],
@@ -6194,6 +7498,7 @@ class $ActivityLogsTable extends ActivityLogs
 
 class ActivityLog extends DataClass implements Insertable<ActivityLog> {
   final int id;
+  final int userId;
 
   /// created | updated | deleted.
   final String action;
@@ -6203,6 +7508,7 @@ class ActivityLog extends DataClass implements Insertable<ActivityLog> {
   final DateTime createdAt;
   const ActivityLog({
     required this.id,
+    required this.userId,
     required this.action,
     required this.entityType,
     this.entityId,
@@ -6213,6 +7519,7 @@ class ActivityLog extends DataClass implements Insertable<ActivityLog> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    map['user_id'] = Variable<int>(userId);
     map['action'] = Variable<String>(action);
     map['entity_type'] = Variable<String>(entityType);
     if (!nullToAbsent || entityId != null) {
@@ -6228,6 +7535,7 @@ class ActivityLog extends DataClass implements Insertable<ActivityLog> {
   ActivityLogsCompanion toCompanion(bool nullToAbsent) {
     return ActivityLogsCompanion(
       id: Value(id),
+      userId: Value(userId),
       action: Value(action),
       entityType: Value(entityType),
       entityId: entityId == null && nullToAbsent
@@ -6247,6 +7555,7 @@ class ActivityLog extends DataClass implements Insertable<ActivityLog> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ActivityLog(
       id: serializer.fromJson<int>(json['id']),
+      userId: serializer.fromJson<int>(json['userId']),
       action: serializer.fromJson<String>(json['action']),
       entityType: serializer.fromJson<String>(json['entityType']),
       entityId: serializer.fromJson<int?>(json['entityId']),
@@ -6259,6 +7568,7 @@ class ActivityLog extends DataClass implements Insertable<ActivityLog> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'userId': serializer.toJson<int>(userId),
       'action': serializer.toJson<String>(action),
       'entityType': serializer.toJson<String>(entityType),
       'entityId': serializer.toJson<int?>(entityId),
@@ -6269,6 +7579,7 @@ class ActivityLog extends DataClass implements Insertable<ActivityLog> {
 
   ActivityLog copyWith({
     int? id,
+    int? userId,
     String? action,
     String? entityType,
     Value<int?> entityId = const Value.absent(),
@@ -6276,6 +7587,7 @@ class ActivityLog extends DataClass implements Insertable<ActivityLog> {
     DateTime? createdAt,
   }) => ActivityLog(
     id: id ?? this.id,
+    userId: userId ?? this.userId,
     action: action ?? this.action,
     entityType: entityType ?? this.entityType,
     entityId: entityId.present ? entityId.value : this.entityId,
@@ -6285,6 +7597,7 @@ class ActivityLog extends DataClass implements Insertable<ActivityLog> {
   ActivityLog copyWithCompanion(ActivityLogsCompanion data) {
     return ActivityLog(
       id: data.id.present ? data.id.value : this.id,
+      userId: data.userId.present ? data.userId.value : this.userId,
       action: data.action.present ? data.action.value : this.action,
       entityType: data.entityType.present
           ? data.entityType.value
@@ -6299,6 +7612,7 @@ class ActivityLog extends DataClass implements Insertable<ActivityLog> {
   String toString() {
     return (StringBuffer('ActivityLog(')
           ..write('id: $id, ')
+          ..write('userId: $userId, ')
           ..write('action: $action, ')
           ..write('entityType: $entityType, ')
           ..write('entityId: $entityId, ')
@@ -6310,12 +7624,13 @@ class ActivityLog extends DataClass implements Insertable<ActivityLog> {
 
   @override
   int get hashCode =>
-      Object.hash(id, action, entityType, entityId, detail, createdAt);
+      Object.hash(id, userId, action, entityType, entityId, detail, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ActivityLog &&
           other.id == this.id &&
+          other.userId == this.userId &&
           other.action == this.action &&
           other.entityType == this.entityType &&
           other.entityId == this.entityId &&
@@ -6325,6 +7640,7 @@ class ActivityLog extends DataClass implements Insertable<ActivityLog> {
 
 class ActivityLogsCompanion extends UpdateCompanion<ActivityLog> {
   final Value<int> id;
+  final Value<int> userId;
   final Value<String> action;
   final Value<String> entityType;
   final Value<int?> entityId;
@@ -6332,6 +7648,7 @@ class ActivityLogsCompanion extends UpdateCompanion<ActivityLog> {
   final Value<DateTime> createdAt;
   const ActivityLogsCompanion({
     this.id = const Value.absent(),
+    this.userId = const Value.absent(),
     this.action = const Value.absent(),
     this.entityType = const Value.absent(),
     this.entityId = const Value.absent(),
@@ -6340,15 +7657,18 @@ class ActivityLogsCompanion extends UpdateCompanion<ActivityLog> {
   });
   ActivityLogsCompanion.insert({
     this.id = const Value.absent(),
+    required int userId,
     required String action,
     required String entityType,
     this.entityId = const Value.absent(),
     this.detail = const Value.absent(),
     this.createdAt = const Value.absent(),
-  }) : action = Value(action),
+  }) : userId = Value(userId),
+       action = Value(action),
        entityType = Value(entityType);
   static Insertable<ActivityLog> custom({
     Expression<int>? id,
+    Expression<int>? userId,
     Expression<String>? action,
     Expression<String>? entityType,
     Expression<int>? entityId,
@@ -6357,6 +7677,7 @@ class ActivityLogsCompanion extends UpdateCompanion<ActivityLog> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (userId != null) 'user_id': userId,
       if (action != null) 'action': action,
       if (entityType != null) 'entity_type': entityType,
       if (entityId != null) 'entity_id': entityId,
@@ -6367,6 +7688,7 @@ class ActivityLogsCompanion extends UpdateCompanion<ActivityLog> {
 
   ActivityLogsCompanion copyWith({
     Value<int>? id,
+    Value<int>? userId,
     Value<String>? action,
     Value<String>? entityType,
     Value<int?>? entityId,
@@ -6375,6 +7697,7 @@ class ActivityLogsCompanion extends UpdateCompanion<ActivityLog> {
   }) {
     return ActivityLogsCompanion(
       id: id ?? this.id,
+      userId: userId ?? this.userId,
       action: action ?? this.action,
       entityType: entityType ?? this.entityType,
       entityId: entityId ?? this.entityId,
@@ -6388,6 +7711,9 @@ class ActivityLogsCompanion extends UpdateCompanion<ActivityLog> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
     }
     if (action.present) {
       map['action'] = Variable<String>(action.value);
@@ -6411,6 +7737,7 @@ class ActivityLogsCompanion extends UpdateCompanion<ActivityLog> {
   String toString() {
     return (StringBuffer('ActivityLogsCompanion(')
           ..write('id: $id, ')
+          ..write('userId: $userId, ')
           ..write('action: $action, ')
           ..write('entityType: $entityType, ')
           ..write('entityId: $entityId, ')
@@ -6482,6 +7809,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     'notifications_vehicle_idx',
     'CREATE INDEX notifications_vehicle_idx ON notifications (vehicle_id)',
   );
+  late final Index notificationsScheduledIdx = Index(
+    'notifications_scheduled_idx',
+    'CREATE INDEX notifications_scheduled_idx ON notifications (user_id, scheduled_at, is_read)',
+  );
   late final Index attachmentsEntityIdx = Index(
     'attachments_entity_idx',
     'CREATE INDEX attachments_entity_idx ON attachments (entity_type, entity_id)',
@@ -6522,6 +7853,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     taxesVehicleIdx,
     taxesDueDateIdx,
     notificationsVehicleIdx,
+    notificationsScheduledIdx,
     attachmentsEntityIdx,
     activityLogsEntityIdx,
     activityLogsCreatedIdx,
@@ -6551,6 +7883,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
+        'maintenance_types',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('maintenance', kind: UpdateKind.update)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
         'vehicles',
         limitUpdateKind: UpdateKind.delete,
       ),
@@ -6576,6 +7915,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('taxes', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'users',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('notifications', kind: UpdateKind.delete)],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
@@ -6624,6 +7970,24 @@ final class $$UsersTableReferences
     ).filter((f) => f.userId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_vehiclesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$NotificationsTable, List<Notification>>
+  _notificationsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.notifications,
+    aliasName: $_aliasNameGenerator(db.users.id, db.notifications.userId),
+  );
+
+  $$NotificationsTableProcessedTableManager get notificationsRefs {
+    final manager = $$NotificationsTableTableManager(
+      $_db,
+      $_db.notifications,
+    ).filter((f) => f.userId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_notificationsRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -6684,6 +8048,31 @@ class $$UsersTableFilterComposer extends Composer<_$AppDatabase, $UsersTable> {
           }) => $$VehiclesTableFilterComposer(
             $db: $db,
             $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> notificationsRefs(
+    Expression<bool> Function($$NotificationsTableFilterComposer f) f,
+  ) {
+    final $$NotificationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.notifications,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NotificationsTableFilterComposer(
+            $db: $db,
+            $table: $db.notifications,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -6785,6 +8174,31 @@ class $$UsersTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> notificationsRefs<T extends Object>(
+    Expression<T> Function($$NotificationsTableAnnotationComposer a) f,
+  ) {
+    final $$NotificationsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.notifications,
+      getReferencedColumn: (t) => t.userId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NotificationsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.notifications,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$UsersTableTableManager
@@ -6800,7 +8214,7 @@ class $$UsersTableTableManager
           $$UsersTableUpdateCompanionBuilder,
           (User, $$UsersTableReferences),
           User,
-          PrefetchHooks Function({bool vehiclesRefs})
+          PrefetchHooks Function({bool vehiclesRefs, bool notificationsRefs})
         > {
   $$UsersTableTableManager(_$AppDatabase db, $UsersTable table)
     : super(
@@ -6851,28 +8265,59 @@ class $$UsersTableTableManager
                     (e.readTable(table), $$UsersTableReferences(db, table, e)),
               )
               .toList(),
-          prefetchHooksCallback: ({vehiclesRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (vehiclesRefs) db.vehicles],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (vehiclesRefs)
-                    await $_getPrefetchedData<User, $UsersTable, Vehicle>(
-                      currentTable: table,
-                      referencedTable: $$UsersTableReferences
-                          ._vehiclesRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$UsersTableReferences(db, table, p0).vehiclesRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.userId == item.id),
-                      typedResults: items,
-                    ),
-                ];
+          prefetchHooksCallback:
+              ({vehiclesRefs = false, notificationsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (vehiclesRefs) db.vehicles,
+                    if (notificationsRefs) db.notifications,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (vehiclesRefs)
+                        await $_getPrefetchedData<User, $UsersTable, Vehicle>(
+                          currentTable: table,
+                          referencedTable: $$UsersTableReferences
+                              ._vehiclesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$UsersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).vehiclesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.userId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (notificationsRefs)
+                        await $_getPrefetchedData<
+                          User,
+                          $UsersTable,
+                          Notification
+                        >(
+                          currentTable: table,
+                          referencedTable: $$UsersTableReferences
+                              ._notificationsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$UsersTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).notificationsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.userId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -6889,7 +8334,7 @@ typedef $$UsersTableProcessedTableManager =
       $$UsersTableUpdateCompanionBuilder,
       (User, $$UsersTableReferences),
       User,
-      PrefetchHooks Function({bool vehiclesRefs})
+      PrefetchHooks Function({bool vehiclesRefs, bool notificationsRefs})
     >;
 typedef $$VehiclesTableCreateCompanionBuilder =
     VehiclesCompanion Function({
@@ -6904,6 +8349,14 @@ typedef $$VehiclesTableCreateCompanionBuilder =
       Value<String> status,
       Value<String?> photoPath,
       Value<bool> isActive,
+      Value<double?> tankCapacity,
+      Value<DateTime?> acquisitionDate,
+      Value<int?> purchaseValue,
+      Value<int?> currentEstimatedValue,
+      Value<String?> color,
+      Value<String?> vin,
+      Value<String?> vehicleType,
+      Value<String?> observations,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
     });
@@ -6920,6 +8373,14 @@ typedef $$VehiclesTableUpdateCompanionBuilder =
       Value<String> status,
       Value<String?> photoPath,
       Value<bool> isActive,
+      Value<double?> tankCapacity,
+      Value<DateTime?> acquisitionDate,
+      Value<int?> purchaseValue,
+      Value<int?> currentEstimatedValue,
+      Value<String?> color,
+      Value<String?> vin,
+      Value<String?> vehicleType,
+      Value<String?> observations,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
     });
@@ -7131,6 +8592,46 @@ class $$VehiclesTableFilterComposer
 
   ColumnFilters<bool> get isActive => $composableBuilder(
     column: $table.isActive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get tankCapacity => $composableBuilder(
+    column: $table.tankCapacity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get acquisitionDate => $composableBuilder(
+    column: $table.acquisitionDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get purchaseValue => $composableBuilder(
+    column: $table.purchaseValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get currentEstimatedValue => $composableBuilder(
+    column: $table.currentEstimatedValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get color => $composableBuilder(
+    column: $table.color,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vin => $composableBuilder(
+    column: $table.vin,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vehicleType => $composableBuilder(
+    column: $table.vehicleType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get observations => $composableBuilder(
+    column: $table.observations,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -7402,6 +8903,46 @@ class $$VehiclesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<double> get tankCapacity => $composableBuilder(
+    column: $table.tankCapacity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get acquisitionDate => $composableBuilder(
+    column: $table.acquisitionDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get purchaseValue => $composableBuilder(
+    column: $table.purchaseValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get currentEstimatedValue => $composableBuilder(
+    column: $table.currentEstimatedValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get color => $composableBuilder(
+    column: $table.color,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vin => $composableBuilder(
+    column: $table.vin,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vehicleType => $composableBuilder(
+    column: $table.vehicleType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get observations => $composableBuilder(
+    column: $table.observations,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -7476,6 +9017,42 @@ class $$VehiclesTableAnnotationComposer
 
   GeneratedColumn<bool> get isActive =>
       $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumn<double> get tankCapacity => $composableBuilder(
+    column: $table.tankCapacity,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get acquisitionDate => $composableBuilder(
+    column: $table.acquisitionDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get purchaseValue => $composableBuilder(
+    column: $table.purchaseValue,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get currentEstimatedValue => $composableBuilder(
+    column: $table.currentEstimatedValue,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get color =>
+      $composableBuilder(column: $table.color, builder: (column) => column);
+
+  GeneratedColumn<String> get vin =>
+      $composableBuilder(column: $table.vin, builder: (column) => column);
+
+  GeneratedColumn<String> get vehicleType => $composableBuilder(
+    column: $table.vehicleType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get observations => $composableBuilder(
+    column: $table.observations,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -7730,6 +9307,14 @@ class $$VehiclesTableTableManager
                 Value<String> status = const Value.absent(),
                 Value<String?> photoPath = const Value.absent(),
                 Value<bool> isActive = const Value.absent(),
+                Value<double?> tankCapacity = const Value.absent(),
+                Value<DateTime?> acquisitionDate = const Value.absent(),
+                Value<int?> purchaseValue = const Value.absent(),
+                Value<int?> currentEstimatedValue = const Value.absent(),
+                Value<String?> color = const Value.absent(),
+                Value<String?> vin = const Value.absent(),
+                Value<String?> vehicleType = const Value.absent(),
+                Value<String?> observations = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
               }) => VehiclesCompanion(
@@ -7744,6 +9329,14 @@ class $$VehiclesTableTableManager
                 status: status,
                 photoPath: photoPath,
                 isActive: isActive,
+                tankCapacity: tankCapacity,
+                acquisitionDate: acquisitionDate,
+                purchaseValue: purchaseValue,
+                currentEstimatedValue: currentEstimatedValue,
+                color: color,
+                vin: vin,
+                vehicleType: vehicleType,
+                observations: observations,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
               ),
@@ -7760,6 +9353,14 @@ class $$VehiclesTableTableManager
                 Value<String> status = const Value.absent(),
                 Value<String?> photoPath = const Value.absent(),
                 Value<bool> isActive = const Value.absent(),
+                Value<double?> tankCapacity = const Value.absent(),
+                Value<DateTime?> acquisitionDate = const Value.absent(),
+                Value<int?> purchaseValue = const Value.absent(),
+                Value<int?> currentEstimatedValue = const Value.absent(),
+                Value<String?> color = const Value.absent(),
+                Value<String?> vin = const Value.absent(),
+                Value<String?> vehicleType = const Value.absent(),
+                Value<String?> observations = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
               }) => VehiclesCompanion.insert(
@@ -7774,6 +9375,14 @@ class $$VehiclesTableTableManager
                 status: status,
                 photoPath: photoPath,
                 isActive: isActive,
+                tankCapacity: tankCapacity,
+                acquisitionDate: acquisitionDate,
+                purchaseValue: purchaseValue,
+                currentEstimatedValue: currentEstimatedValue,
+                color: color,
+                vin: vin,
+                vehicleType: vehicleType,
+                observations: observations,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
               ),
@@ -8437,6 +10046,8 @@ typedef $$MaintenanceTypesTableCreateCompanionBuilder =
       required String name,
       Value<double?> recommendedIntervalKm,
       Value<int?> recommendedIntervalMonths,
+      Value<String?> description,
+      Value<bool> isCustom,
     });
 typedef $$MaintenanceTypesTableUpdateCompanionBuilder =
     MaintenanceTypesCompanion Function({
@@ -8444,6 +10055,8 @@ typedef $$MaintenanceTypesTableUpdateCompanionBuilder =
       Value<String> name,
       Value<double?> recommendedIntervalKm,
       Value<int?> recommendedIntervalMonths,
+      Value<String?> description,
+      Value<bool> isCustom,
     });
 
 final class $$MaintenanceTypesTableReferences
@@ -8506,6 +10119,16 @@ class $$MaintenanceTypesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isCustom => $composableBuilder(
+    column: $table.isCustom,
+    builder: (column) => ColumnFilters(column),
+  );
+
   Expression<bool> maintenanceRefs(
     Expression<bool> Function($$MaintenanceTableFilterComposer f) f,
   ) {
@@ -8560,6 +10183,16 @@ class $$MaintenanceTypesTableOrderingComposer
     column: $table.recommendedIntervalMonths,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isCustom => $composableBuilder(
+    column: $table.isCustom,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$MaintenanceTypesTableAnnotationComposer
@@ -8586,6 +10219,14 @@ class $$MaintenanceTypesTableAnnotationComposer
     column: $table.recommendedIntervalMonths,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isCustom =>
+      $composableBuilder(column: $table.isCustom, builder: (column) => column);
 
   Expression<T> maintenanceRefs<T extends Object>(
     Expression<T> Function($$MaintenanceTableAnnotationComposer a) f,
@@ -8647,11 +10288,15 @@ class $$MaintenanceTypesTableTableManager
                 Value<String> name = const Value.absent(),
                 Value<double?> recommendedIntervalKm = const Value.absent(),
                 Value<int?> recommendedIntervalMonths = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<bool> isCustom = const Value.absent(),
               }) => MaintenanceTypesCompanion(
                 id: id,
                 name: name,
                 recommendedIntervalKm: recommendedIntervalKm,
                 recommendedIntervalMonths: recommendedIntervalMonths,
+                description: description,
+                isCustom: isCustom,
               ),
           createCompanionCallback:
               ({
@@ -8659,11 +10304,15 @@ class $$MaintenanceTypesTableTableManager
                 required String name,
                 Value<double?> recommendedIntervalKm = const Value.absent(),
                 Value<int?> recommendedIntervalMonths = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<bool> isCustom = const Value.absent(),
               }) => MaintenanceTypesCompanion.insert(
                 id: id,
                 name: name,
                 recommendedIntervalKm: recommendedIntervalKm,
                 recommendedIntervalMonths: recommendedIntervalMonths,
+                description: description,
+                isCustom: isCustom,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -8730,6 +10379,8 @@ typedef $$MaintenanceTableCreateCompanionBuilder =
       Value<double?> odometerKm,
       required String title,
       required int cost,
+      Value<String?> workshop,
+      Value<String?> invoiceNumber,
       Value<DateTime?> nextDueDate,
       Value<double?> nextDueKm,
       Value<String?> notes,
@@ -8744,6 +10395,8 @@ typedef $$MaintenanceTableUpdateCompanionBuilder =
       Value<double?> odometerKm,
       Value<String> title,
       Value<int> cost,
+      Value<String?> workshop,
+      Value<String?> invoiceNumber,
       Value<DateTime?> nextDueDate,
       Value<double?> nextDueKm,
       Value<String?> notes,
@@ -8824,6 +10477,16 @@ class $$MaintenanceTableFilterComposer
 
   ColumnFilters<int> get cost => $composableBuilder(
     column: $table.cost,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get workshop => $composableBuilder(
+    column: $table.workshop,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get invoiceNumber => $composableBuilder(
+    column: $table.invoiceNumber,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -8928,6 +10591,16 @@ class $$MaintenanceTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get workshop => $composableBuilder(
+    column: $table.workshop,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get invoiceNumber => $composableBuilder(
+    column: $table.invoiceNumber,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get nextDueDate => $composableBuilder(
     column: $table.nextDueDate,
     builder: (column) => ColumnOrderings(column),
@@ -9020,6 +10693,14 @@ class $$MaintenanceTableAnnotationComposer
 
   GeneratedColumn<int> get cost =>
       $composableBuilder(column: $table.cost, builder: (column) => column);
+
+  GeneratedColumn<String> get workshop =>
+      $composableBuilder(column: $table.workshop, builder: (column) => column);
+
+  GeneratedColumn<String> get invoiceNumber => $composableBuilder(
+    column: $table.invoiceNumber,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<DateTime> get nextDueDate => $composableBuilder(
     column: $table.nextDueDate,
@@ -9117,6 +10798,8 @@ class $$MaintenanceTableTableManager
                 Value<double?> odometerKm = const Value.absent(),
                 Value<String> title = const Value.absent(),
                 Value<int> cost = const Value.absent(),
+                Value<String?> workshop = const Value.absent(),
+                Value<String?> invoiceNumber = const Value.absent(),
                 Value<DateTime?> nextDueDate = const Value.absent(),
                 Value<double?> nextDueKm = const Value.absent(),
                 Value<String?> notes = const Value.absent(),
@@ -9129,6 +10812,8 @@ class $$MaintenanceTableTableManager
                 odometerKm: odometerKm,
                 title: title,
                 cost: cost,
+                workshop: workshop,
+                invoiceNumber: invoiceNumber,
                 nextDueDate: nextDueDate,
                 nextDueKm: nextDueKm,
                 notes: notes,
@@ -9143,6 +10828,8 @@ class $$MaintenanceTableTableManager
                 Value<double?> odometerKm = const Value.absent(),
                 required String title,
                 required int cost,
+                Value<String?> workshop = const Value.absent(),
+                Value<String?> invoiceNumber = const Value.absent(),
                 Value<DateTime?> nextDueDate = const Value.absent(),
                 Value<double?> nextDueKm = const Value.absent(),
                 Value<String?> notes = const Value.absent(),
@@ -9155,6 +10842,8 @@ class $$MaintenanceTableTableManager
                 odometerKm: odometerKm,
                 title: title,
                 cost: cost,
+                workshop: workshop,
+                invoiceNumber: invoiceNumber,
                 nextDueDate: nextDueDate,
                 nextDueKm: nextDueKm,
                 notes: notes,
@@ -9602,6 +11291,9 @@ typedef $$DocumentsTableCreateCompanionBuilder =
       required DateTime expiryDate,
       Value<String?> filePath,
       Value<int> reminderDays,
+      Value<int> cost,
+      Value<String?> entity,
+      Value<String> status,
       Value<DateTime> createdAt,
     });
 typedef $$DocumentsTableUpdateCompanionBuilder =
@@ -9615,6 +11307,9 @@ typedef $$DocumentsTableUpdateCompanionBuilder =
       Value<DateTime> expiryDate,
       Value<String?> filePath,
       Value<int> reminderDays,
+      Value<int> cost,
+      Value<String?> entity,
+      Value<String> status,
       Value<DateTime> createdAt,
     });
 
@@ -9688,6 +11383,21 @@ class $$DocumentsTableFilterComposer
 
   ColumnFilters<int> get reminderDays => $composableBuilder(
     column: $table.reminderDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get cost => $composableBuilder(
+    column: $table.cost,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get entity => $composableBuilder(
+    column: $table.entity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -9769,6 +11479,21 @@ class $$DocumentsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get cost => $composableBuilder(
+    column: $table.cost,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get entity => $composableBuilder(
+    column: $table.entity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -9835,6 +11560,15 @@ class $$DocumentsTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<int> get cost =>
+      $composableBuilder(column: $table.cost, builder: (column) => column);
+
+  GeneratedColumn<String> get entity =>
+      $composableBuilder(column: $table.entity, builder: (column) => column);
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
@@ -9899,6 +11633,9 @@ class $$DocumentsTableTableManager
                 Value<DateTime> expiryDate = const Value.absent(),
                 Value<String?> filePath = const Value.absent(),
                 Value<int> reminderDays = const Value.absent(),
+                Value<int> cost = const Value.absent(),
+                Value<String?> entity = const Value.absent(),
+                Value<String> status = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
               }) => DocumentsCompanion(
                 id: id,
@@ -9910,6 +11647,9 @@ class $$DocumentsTableTableManager
                 expiryDate: expiryDate,
                 filePath: filePath,
                 reminderDays: reminderDays,
+                cost: cost,
+                entity: entity,
+                status: status,
                 createdAt: createdAt,
               ),
           createCompanionCallback:
@@ -9923,6 +11663,9 @@ class $$DocumentsTableTableManager
                 required DateTime expiryDate,
                 Value<String?> filePath = const Value.absent(),
                 Value<int> reminderDays = const Value.absent(),
+                Value<int> cost = const Value.absent(),
+                Value<String?> entity = const Value.absent(),
+                Value<String> status = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
               }) => DocumentsCompanion.insert(
                 id: id,
@@ -9934,6 +11677,9 @@ class $$DocumentsTableTableManager
                 expiryDate: expiryDate,
                 filePath: filePath,
                 reminderDays: reminderDays,
+                cost: cost,
+                entity: entity,
+                status: status,
                 createdAt: createdAt,
               ),
           withReferenceMapper: (p0) => p0
@@ -10010,9 +11756,12 @@ typedef $$InsuranceTableCreateCompanionBuilder =
       required String provider,
       Value<String?> policyNumber,
       Value<String?> coverage,
+      required String policyType,
       Value<DateTime?> startDate,
       required DateTime endDate,
       Value<int?> premium,
+      Value<String> paymentFrequency,
+      Value<String?> notes,
       Value<int> reminderDays,
       Value<DateTime> createdAt,
     });
@@ -10023,9 +11772,12 @@ typedef $$InsuranceTableUpdateCompanionBuilder =
       Value<String> provider,
       Value<String?> policyNumber,
       Value<String?> coverage,
+      Value<String> policyType,
       Value<DateTime?> startDate,
       Value<DateTime> endDate,
       Value<int?> premium,
+      Value<String> paymentFrequency,
+      Value<String?> notes,
       Value<int> reminderDays,
       Value<DateTime> createdAt,
     });
@@ -10083,6 +11835,11 @@ class $$InsuranceTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get policyType => $composableBuilder(
+    column: $table.policyType,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<DateTime> get startDate => $composableBuilder(
     column: $table.startDate,
     builder: (column) => ColumnFilters(column),
@@ -10095,6 +11852,16 @@ class $$InsuranceTableFilterComposer
 
   ColumnFilters<int> get premium => $composableBuilder(
     column: $table.premium,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get paymentFrequency => $composableBuilder(
+    column: $table.paymentFrequency,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -10161,6 +11928,11 @@ class $$InsuranceTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get policyType => $composableBuilder(
+    column: $table.policyType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get startDate => $composableBuilder(
     column: $table.startDate,
     builder: (column) => ColumnOrderings(column),
@@ -10173,6 +11945,16 @@ class $$InsuranceTableOrderingComposer
 
   ColumnOrderings<int> get premium => $composableBuilder(
     column: $table.premium,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get paymentFrequency => $composableBuilder(
+    column: $table.paymentFrequency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -10233,6 +12015,11 @@ class $$InsuranceTableAnnotationComposer
   GeneratedColumn<String> get coverage =>
       $composableBuilder(column: $table.coverage, builder: (column) => column);
 
+  GeneratedColumn<String> get policyType => $composableBuilder(
+    column: $table.policyType,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<DateTime> get startDate =>
       $composableBuilder(column: $table.startDate, builder: (column) => column);
 
@@ -10241,6 +12028,14 @@ class $$InsuranceTableAnnotationComposer
 
   GeneratedColumn<int> get premium =>
       $composableBuilder(column: $table.premium, builder: (column) => column);
+
+  GeneratedColumn<String> get paymentFrequency => $composableBuilder(
+    column: $table.paymentFrequency,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
 
   GeneratedColumn<int> get reminderDays => $composableBuilder(
     column: $table.reminderDays,
@@ -10307,9 +12102,12 @@ class $$InsuranceTableTableManager
                 Value<String> provider = const Value.absent(),
                 Value<String?> policyNumber = const Value.absent(),
                 Value<String?> coverage = const Value.absent(),
+                Value<String> policyType = const Value.absent(),
                 Value<DateTime?> startDate = const Value.absent(),
                 Value<DateTime> endDate = const Value.absent(),
                 Value<int?> premium = const Value.absent(),
+                Value<String> paymentFrequency = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
                 Value<int> reminderDays = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
               }) => InsuranceCompanion(
@@ -10318,9 +12116,12 @@ class $$InsuranceTableTableManager
                 provider: provider,
                 policyNumber: policyNumber,
                 coverage: coverage,
+                policyType: policyType,
                 startDate: startDate,
                 endDate: endDate,
                 premium: premium,
+                paymentFrequency: paymentFrequency,
+                notes: notes,
                 reminderDays: reminderDays,
                 createdAt: createdAt,
               ),
@@ -10331,9 +12132,12 @@ class $$InsuranceTableTableManager
                 required String provider,
                 Value<String?> policyNumber = const Value.absent(),
                 Value<String?> coverage = const Value.absent(),
+                required String policyType,
                 Value<DateTime?> startDate = const Value.absent(),
                 required DateTime endDate,
                 Value<int?> premium = const Value.absent(),
+                Value<String> paymentFrequency = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
                 Value<int> reminderDays = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
               }) => InsuranceCompanion.insert(
@@ -10342,9 +12146,12 @@ class $$InsuranceTableTableManager
                 provider: provider,
                 policyNumber: policyNumber,
                 coverage: coverage,
+                policyType: policyType,
                 startDate: startDate,
                 endDate: endDate,
                 premium: premium,
+                paymentFrequency: paymentFrequency,
+                notes: notes,
                 reminderDays: reminderDays,
                 createdAt: createdAt,
               ),
@@ -10420,9 +12227,12 @@ typedef $$TaxesTableCreateCompanionBuilder =
       Value<int> id,
       required int vehicleId,
       required String taxType,
+      required int taxYear,
       required int amount,
       required DateTime dueDate,
+      Value<String> status,
       Value<DateTime?> paidDate,
+      Value<String?> receiptPath,
       Value<int> reminderDays,
       Value<DateTime> createdAt,
     });
@@ -10431,9 +12241,12 @@ typedef $$TaxesTableUpdateCompanionBuilder =
       Value<int> id,
       Value<int> vehicleId,
       Value<String> taxType,
+      Value<int> taxYear,
       Value<int> amount,
       Value<DateTime> dueDate,
+      Value<String> status,
       Value<DateTime?> paidDate,
+      Value<String?> receiptPath,
       Value<int> reminderDays,
       Value<DateTime> createdAt,
     });
@@ -10478,6 +12291,11 @@ class $$TaxesTableFilterComposer extends Composer<_$AppDatabase, $TaxesTable> {
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<int> get taxYear => $composableBuilder(
+    column: $table.taxYear,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<int> get amount => $composableBuilder(
     column: $table.amount,
     builder: (column) => ColumnFilters(column),
@@ -10488,8 +12306,18 @@ class $$TaxesTableFilterComposer extends Composer<_$AppDatabase, $TaxesTable> {
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<DateTime> get paidDate => $composableBuilder(
     column: $table.paidDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get receiptPath => $composableBuilder(
+    column: $table.receiptPath,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -10546,6 +12374,11 @@ class $$TaxesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get taxYear => $composableBuilder(
+    column: $table.taxYear,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get amount => $composableBuilder(
     column: $table.amount,
     builder: (column) => ColumnOrderings(column),
@@ -10556,8 +12389,18 @@ class $$TaxesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get paidDate => $composableBuilder(
     column: $table.paidDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get receiptPath => $composableBuilder(
+    column: $table.receiptPath,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -10610,14 +12453,25 @@ class $$TaxesTableAnnotationComposer
   GeneratedColumn<String> get taxType =>
       $composableBuilder(column: $table.taxType, builder: (column) => column);
 
+  GeneratedColumn<int> get taxYear =>
+      $composableBuilder(column: $table.taxYear, builder: (column) => column);
+
   GeneratedColumn<int> get amount =>
       $composableBuilder(column: $table.amount, builder: (column) => column);
 
   GeneratedColumn<DateTime> get dueDate =>
       $composableBuilder(column: $table.dueDate, builder: (column) => column);
 
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
   GeneratedColumn<DateTime> get paidDate =>
       $composableBuilder(column: $table.paidDate, builder: (column) => column);
+
+  GeneratedColumn<String> get receiptPath => $composableBuilder(
+    column: $table.receiptPath,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<int> get reminderDays => $composableBuilder(
     column: $table.reminderDays,
@@ -10682,18 +12536,24 @@ class $$TaxesTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<int> vehicleId = const Value.absent(),
                 Value<String> taxType = const Value.absent(),
+                Value<int> taxYear = const Value.absent(),
                 Value<int> amount = const Value.absent(),
                 Value<DateTime> dueDate = const Value.absent(),
+                Value<String> status = const Value.absent(),
                 Value<DateTime?> paidDate = const Value.absent(),
+                Value<String?> receiptPath = const Value.absent(),
                 Value<int> reminderDays = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
               }) => TaxesCompanion(
                 id: id,
                 vehicleId: vehicleId,
                 taxType: taxType,
+                taxYear: taxYear,
                 amount: amount,
                 dueDate: dueDate,
+                status: status,
                 paidDate: paidDate,
+                receiptPath: receiptPath,
                 reminderDays: reminderDays,
                 createdAt: createdAt,
               ),
@@ -10702,18 +12562,24 @@ class $$TaxesTableTableManager
                 Value<int> id = const Value.absent(),
                 required int vehicleId,
                 required String taxType,
+                required int taxYear,
                 required int amount,
                 required DateTime dueDate,
+                Value<String> status = const Value.absent(),
                 Value<DateTime?> paidDate = const Value.absent(),
+                Value<String?> receiptPath = const Value.absent(),
                 Value<int> reminderDays = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
               }) => TaxesCompanion.insert(
                 id: id,
                 vehicleId: vehicleId,
                 taxType: taxType,
+                taxYear: taxYear,
                 amount: amount,
                 dueDate: dueDate,
+                status: status,
                 paidDate: paidDate,
+                receiptPath: receiptPath,
                 reminderDays: reminderDays,
                 createdAt: createdAt,
               ),
@@ -10785,6 +12651,7 @@ typedef $$TaxesTableProcessedTableManager =
 typedef $$NotificationsTableCreateCompanionBuilder =
     NotificationsCompanion Function({
       Value<int> id,
+      required int userId,
       Value<int?> vehicleId,
       required String type,
       required String title,
@@ -10793,11 +12660,13 @@ typedef $$NotificationsTableCreateCompanionBuilder =
       Value<int?> relatedId,
       Value<DateTime?> scheduledAt,
       Value<bool> isSent,
+      Value<bool> isRead,
       Value<DateTime> createdAt,
     });
 typedef $$NotificationsTableUpdateCompanionBuilder =
     NotificationsCompanion Function({
       Value<int> id,
+      Value<int> userId,
       Value<int?> vehicleId,
       Value<String> type,
       Value<String> title,
@@ -10806,6 +12675,7 @@ typedef $$NotificationsTableUpdateCompanionBuilder =
       Value<int?> relatedId,
       Value<DateTime?> scheduledAt,
       Value<bool> isSent,
+      Value<bool> isRead,
       Value<DateTime> createdAt,
     });
 
@@ -10816,6 +12686,24 @@ final class $$NotificationsTableReferences
     super.$_table,
     super.$_typedResult,
   );
+
+  static $UsersTable _userIdTable(_$AppDatabase db) => db.users.createAlias(
+    $_aliasNameGenerator(db.notifications.userId, db.users.id),
+  );
+
+  $$UsersTableProcessedTableManager get userId {
+    final $_column = $_itemColumn<int>('user_id')!;
+
+    final manager = $$UsersTableTableManager(
+      $_db,
+      $_db.users,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
 
   static $VehiclesTable _vehicleIdTable(_$AppDatabase db) =>
       db.vehicles.createAlias(
@@ -10886,10 +12774,38 @@ class $$NotificationsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<bool> get isRead => $composableBuilder(
+    column: $table.isRead,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
   );
+
+  $$UsersTableFilterComposer get userId {
+    final $$UsersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableFilterComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 
   $$VehiclesTableFilterComposer get vehicleId {
     final $$VehiclesTableFilterComposer composer = $composerBuilder(
@@ -10964,10 +12880,38 @@ class $$NotificationsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<bool> get isRead => $composableBuilder(
+    column: $table.isRead,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  $$UsersTableOrderingComposer get userId {
+    final $$UsersTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableOrderingComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 
   $$VehiclesTableOrderingComposer get vehicleId {
     final $$VehiclesTableOrderingComposer composer = $composerBuilder(
@@ -11030,8 +12974,34 @@ class $$NotificationsTableAnnotationComposer
   GeneratedColumn<bool> get isSent =>
       $composableBuilder(column: $table.isSent, builder: (column) => column);
 
+  GeneratedColumn<bool> get isRead =>
+      $composableBuilder(column: $table.isRead, builder: (column) => column);
+
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  $$UsersTableAnnotationComposer get userId {
+    final $$UsersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userId,
+      referencedTable: $db.users,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UsersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.users,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 
   $$VehiclesTableAnnotationComposer get vehicleId {
     final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
@@ -11070,7 +13040,7 @@ class $$NotificationsTableTableManager
           $$NotificationsTableUpdateCompanionBuilder,
           (Notification, $$NotificationsTableReferences),
           Notification,
-          PrefetchHooks Function({bool vehicleId})
+          PrefetchHooks Function({bool userId, bool vehicleId})
         > {
   $$NotificationsTableTableManager(_$AppDatabase db, $NotificationsTable table)
     : super(
@@ -11086,6 +13056,7 @@ class $$NotificationsTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                Value<int> userId = const Value.absent(),
                 Value<int?> vehicleId = const Value.absent(),
                 Value<String> type = const Value.absent(),
                 Value<String> title = const Value.absent(),
@@ -11094,9 +13065,11 @@ class $$NotificationsTableTableManager
                 Value<int?> relatedId = const Value.absent(),
                 Value<DateTime?> scheduledAt = const Value.absent(),
                 Value<bool> isSent = const Value.absent(),
+                Value<bool> isRead = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
               }) => NotificationsCompanion(
                 id: id,
+                userId: userId,
                 vehicleId: vehicleId,
                 type: type,
                 title: title,
@@ -11105,11 +13078,13 @@ class $$NotificationsTableTableManager
                 relatedId: relatedId,
                 scheduledAt: scheduledAt,
                 isSent: isSent,
+                isRead: isRead,
                 createdAt: createdAt,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                required int userId,
                 Value<int?> vehicleId = const Value.absent(),
                 required String type,
                 required String title,
@@ -11118,9 +13093,11 @@ class $$NotificationsTableTableManager
                 Value<int?> relatedId = const Value.absent(),
                 Value<DateTime?> scheduledAt = const Value.absent(),
                 Value<bool> isSent = const Value.absent(),
+                Value<bool> isRead = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
               }) => NotificationsCompanion.insert(
                 id: id,
+                userId: userId,
                 vehicleId: vehicleId,
                 type: type,
                 title: title,
@@ -11129,6 +13106,7 @@ class $$NotificationsTableTableManager
                 relatedId: relatedId,
                 scheduledAt: scheduledAt,
                 isSent: isSent,
+                isRead: isRead,
                 createdAt: createdAt,
               ),
           withReferenceMapper: (p0) => p0
@@ -11139,7 +13117,7 @@ class $$NotificationsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({vehicleId = false}) {
+          prefetchHooksCallback: ({userId = false, vehicleId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -11159,6 +13137,19 @@ class $$NotificationsTableTableManager
                       dynamic
                     >
                   >(state) {
+                    if (userId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.userId,
+                                referencedTable: $$NotificationsTableReferences
+                                    ._userIdTable(db),
+                                referencedColumn: $$NotificationsTableReferences
+                                    ._userIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
                     if (vehicleId) {
                       state =
                           state.withJoin(
@@ -11196,7 +13187,7 @@ typedef $$NotificationsTableProcessedTableManager =
       $$NotificationsTableUpdateCompanionBuilder,
       (Notification, $$NotificationsTableReferences),
       Notification,
-      PrefetchHooks Function({bool vehicleId})
+      PrefetchHooks Function({bool userId, bool vehicleId})
     >;
 typedef $$AttachmentsTableCreateCompanionBuilder =
     AttachmentsCompanion Function({
@@ -11205,6 +13196,7 @@ typedef $$AttachmentsTableCreateCompanionBuilder =
       required int entityId,
       required String path,
       Value<String?> mimeType,
+      required int sizeBytes,
       Value<DateTime> createdAt,
     });
 typedef $$AttachmentsTableUpdateCompanionBuilder =
@@ -11214,6 +13206,7 @@ typedef $$AttachmentsTableUpdateCompanionBuilder =
       Value<int> entityId,
       Value<String> path,
       Value<String?> mimeType,
+      Value<int> sizeBytes,
       Value<DateTime> createdAt,
     });
 
@@ -11248,6 +13241,11 @@ class $$AttachmentsTableFilterComposer
 
   ColumnFilters<String> get mimeType => $composableBuilder(
     column: $table.mimeType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sizeBytes => $composableBuilder(
+    column: $table.sizeBytes,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -11291,6 +13289,11 @@ class $$AttachmentsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get sizeBytes => $composableBuilder(
+    column: $table.sizeBytes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -11322,6 +13325,9 @@ class $$AttachmentsTableAnnotationComposer
 
   GeneratedColumn<String> get mimeType =>
       $composableBuilder(column: $table.mimeType, builder: (column) => column);
+
+  GeneratedColumn<int> get sizeBytes =>
+      $composableBuilder(column: $table.sizeBytes, builder: (column) => column);
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -11363,6 +13369,7 @@ class $$AttachmentsTableTableManager
                 Value<int> entityId = const Value.absent(),
                 Value<String> path = const Value.absent(),
                 Value<String?> mimeType = const Value.absent(),
+                Value<int> sizeBytes = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
               }) => AttachmentsCompanion(
                 id: id,
@@ -11370,6 +13377,7 @@ class $$AttachmentsTableTableManager
                 entityId: entityId,
                 path: path,
                 mimeType: mimeType,
+                sizeBytes: sizeBytes,
                 createdAt: createdAt,
               ),
           createCompanionCallback:
@@ -11379,6 +13387,7 @@ class $$AttachmentsTableTableManager
                 required int entityId,
                 required String path,
                 Value<String?> mimeType = const Value.absent(),
+                required int sizeBytes,
                 Value<DateTime> createdAt = const Value.absent(),
               }) => AttachmentsCompanion.insert(
                 id: id,
@@ -11386,6 +13395,7 @@ class $$AttachmentsTableTableManager
                 entityId: entityId,
                 path: path,
                 mimeType: mimeType,
+                sizeBytes: sizeBytes,
                 createdAt: createdAt,
               ),
           withReferenceMapper: (p0) => p0
@@ -11416,6 +13426,7 @@ typedef $$AttachmentsTableProcessedTableManager =
 typedef $$ActivityLogsTableCreateCompanionBuilder =
     ActivityLogsCompanion Function({
       Value<int> id,
+      required int userId,
       required String action,
       required String entityType,
       Value<int?> entityId,
@@ -11425,6 +13436,7 @@ typedef $$ActivityLogsTableCreateCompanionBuilder =
 typedef $$ActivityLogsTableUpdateCompanionBuilder =
     ActivityLogsCompanion Function({
       Value<int> id,
+      Value<int> userId,
       Value<String> action,
       Value<String> entityType,
       Value<int?> entityId,
@@ -11443,6 +13455,11 @@ class $$ActivityLogsTableFilterComposer
   });
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get userId => $composableBuilder(
+    column: $table.userId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -11486,6 +13503,11 @@ class $$ActivityLogsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get action => $composableBuilder(
     column: $table.action,
     builder: (column) => ColumnOrderings(column),
@@ -11523,6 +13545,9 @@ class $$ActivityLogsTableAnnotationComposer
   });
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
 
   GeneratedColumn<String> get action =>
       $composableBuilder(column: $table.action, builder: (column) => column);
@@ -11574,6 +13599,7 @@ class $$ActivityLogsTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                Value<int> userId = const Value.absent(),
                 Value<String> action = const Value.absent(),
                 Value<String> entityType = const Value.absent(),
                 Value<int?> entityId = const Value.absent(),
@@ -11581,6 +13607,7 @@ class $$ActivityLogsTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
               }) => ActivityLogsCompanion(
                 id: id,
+                userId: userId,
                 action: action,
                 entityType: entityType,
                 entityId: entityId,
@@ -11590,6 +13617,7 @@ class $$ActivityLogsTableTableManager
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
+                required int userId,
                 required String action,
                 required String entityType,
                 Value<int?> entityId = const Value.absent(),
@@ -11597,6 +13625,7 @@ class $$ActivityLogsTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
               }) => ActivityLogsCompanion.insert(
                 id: id,
+                userId: userId,
                 action: action,
                 entityType: entityType,
                 entityId: entityId,

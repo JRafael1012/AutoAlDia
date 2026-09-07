@@ -51,10 +51,14 @@ class LocalStorageService {
   }
 
   /// Guarda una fotografía de un vehículo.
-  Future<File> saveVehiclePhoto({
+  ///
+  /// Devuelve la **ruta relativa** (p. ej. `vehicles/3/photos/...`) para
+  /// persistir en la base de datos. La ruta absoluta se reconstruye en
+  /// tiempo de ejecución con [resolveRelativeFile].
+  Future<String> saveVehiclePhoto({
     required int vehicleId,
     required File sourceFile,
-  }) async {
+  }) {
     return _saveFileInVehicleFolder(
       vehicleId: vehicleId,
       subfolder: 'photos',
@@ -64,11 +68,13 @@ class LocalStorageService {
   }
 
   /// Guarda un archivo o foto de documento (SOAT, RTM, Seguro, Impuesto).
-  Future<File> saveDocumentFile({
+  ///
+  /// Devuelve la ruta relativa dentro de `app_documents/...`.
+  Future<String> saveDocumentFile({
     required int vehicleId,
     required File sourceFile,
     required String documentType,
-  }) async {
+  }) {
     final sanitizedType = documentType.toLowerCase().replaceAll(RegExp(r'\s+'), '_');
     return _saveFileInVehicleFolder(
       vehicleId: vehicleId,
@@ -79,11 +85,13 @@ class LocalStorageService {
   }
 
   /// Guarda una imagen o comprobante de gasto/recibo.
-  Future<File> saveReceiptFile({
+  ///
+  /// Devuelve la ruta relativa dentro de `app_documents/...`.
+  Future<String> saveReceiptFile({
     required int vehicleId,
     required File sourceFile,
     required String category,
-  }) async {
+  }) {
     final sanitizedCat = category.toLowerCase().replaceAll(RegExp(r'\s+'), '_');
     return _saveFileInVehicleFolder(
       vehicleId: vehicleId,
@@ -91,6 +99,39 @@ class LocalStorageService {
       sourceFile: sourceFile,
       prefix: 'receipt_${sanitizedCat}_${DateTime.now().millisecondsSinceEpoch}',
     );
+  }
+
+  /// Convierte una ruta relativa persistida en un [File] absoluto.
+  ///
+  /// La base de datos nunca guarda rutas absolutas (convención del proyecto,
+  /// ver `attachments_table`); la resolución ocurre solo al mostrar o borrar.
+  Future<File> resolveRelativeFile(String relativePath) async {
+    try {
+      final base = await getAppDocumentsDirectory();
+      return File(p.join(base.path, relativePath));
+    } catch (e) {
+      throw StorageFailure(
+        'No se pudo acceder al archivo solicitado.',
+        cause: e,
+      );
+    }
+  }
+
+  /// Elimina un archivo relativo si existe. No hace nada si el path es vacío
+  /// o el archivo no existe (evita borrar la raíz de `app_documents`).
+  Future<void> deleteRelativeFile(String relativePath) async {
+    if (relativePath.trim().isEmpty) return;
+    try {
+      final file = await resolveRelativeFile(relativePath);
+      if (await file.exists()) {
+        await file.delete();
+      }
+    } catch (e) {
+      throw StorageFailure(
+        'No se pudieron eliminar las fotos del vehículo.',
+        cause: e,
+      );
+    }
   }
 
   /// Elimina en cascada física todos los archivos y carpetas de un vehículo borrado.
@@ -126,7 +167,7 @@ class LocalStorageService {
     }
   }
 
-  Future<File> _saveFileInVehicleFolder({
+  Future<String> _saveFileInVehicleFolder({
     required int vehicleId,
     required String subfolder,
     required File sourceFile,
@@ -141,9 +182,11 @@ class LocalStorageService {
 
       final ext = p.extension(sourceFile.path);
       final newFileName = '${prefix}_${DateTime.now().millisecondsSinceEpoch}$ext';
-      final targetPath = p.join(targetFolder.path, newFileName);
+      final relativePath = p.join('vehicles', vehicleId.toString(), subfolder, newFileName);
+      final targetPath = p.join(vehicleDir.path, subfolder, newFileName);
 
-      return await sourceFile.copy(targetPath);
+      await sourceFile.copy(targetPath);
+      return relativePath;
     } catch (e) {
       throw StorageFailure(
         'Error al guardar el archivo en el dispositivo.',

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/database/app_database_provider.dart';
@@ -35,9 +36,38 @@ class VehiclesListController extends _$VehiclesListController {
   }
 
   /// Elimina un vehículo de la base de datos y limpia sus archivos físicos.
-  Future<void> deleteVehicle(int vehicleId) async {
-    await ref.read(vehicleRepositoryProvider).delete(vehicleId);
-    await ref.read(localStorageServiceProvider).deleteVehicleDirectory(vehicleId);
+  ///
+  /// Si el vehículo eliminado era el activo, se promueve automáticamente el
+  /// más reciente de los restantes (M8). Si la limpieza física falla, la fila
+  /// ya se borró: se registra el error con claridad y queda pendiente una
+  /// limpieza huérfana futura.
+  Future<void> deleteVehicle(VehicleProfile vehicle) async {
+    final user = await ref.read(profileControllerProvider.future);
+    final repo = ref.read(vehicleRepositoryProvider);
+
+    await repo.delete(vehicle.id);
+    try {
+      await ref.read(localStorageServiceProvider).deleteVehicleDirectory(vehicle.id);
+    } catch (e) {
+      // M4: no revertir el DELETE en BD; registrar el fallo sin silenciarlo.
+      // TODO(huérfanos): implementar una limpieza programada que escanee
+      // `app_documents/vehicles/` y borre carpetas sin fila equivalente en BD.
+      debugPrint(
+        'AutoAlDía: no se pudieron eliminar los archivos del vehículo '
+        '${vehicle.id} ($e). Quedan huérfanos; limpieza pendiente.',
+      );
+    }
+
+    // M8: si se eliminó el activo, promover el más reciente de los restantes.
+    if (vehicle.isActive && user != null) {
+      final remaining = await repo.getAll(user.id);
+      if (remaining.isNotEmpty) {
+        final mostRecent = remaining
+            .reduce((a, b) => a.createdAt.isAfter(b.createdAt) ? a : b);
+        await repo.setActive(mostRecent.id, user.id);
+      }
+    }
+
     // Limpiar el vehículo activo en memoria si se eliminó el que estaba activo.
     ref.invalidate(activeVehicleControllerProvider);
     await reload();

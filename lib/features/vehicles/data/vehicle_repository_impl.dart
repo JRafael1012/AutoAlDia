@@ -63,6 +63,14 @@ class VehicleRepositoryImpl implements VehicleRepository {
     required String fuelType,
     int? year,
     String? plate,
+    double? tankCapacity,
+    DateTime? acquisitionDate,
+    int? purchaseValue,
+    int? currentEstimatedValue,
+    String? color,
+    String? vin,
+    String? vehicleType,
+    String? observations,
   }) async {
     try {
       final isFirst = !await _dao.hasAny(userId);
@@ -78,6 +86,14 @@ class VehicleRepositoryImpl implements VehicleRepository {
           // Decisión: el primer vehículo queda automáticamente activo para
           // que el dashboard tenga algo que mostrar de inmediato.
           isActive: Value(isFirst),
+          tankCapacity: Value(tankCapacity),
+          acquisitionDate: Value(acquisitionDate),
+          purchaseValue: Value(purchaseValue),
+          currentEstimatedValue: Value(currentEstimatedValue),
+          color: Value(_cleanText(color)),
+          vin: Value(_cleanText(vin)),
+          vehicleType: Value(_cleanText(vehicleType)),
+          observations: Value(_cleanText(observations)),
         ),
       );
       final row = await _dao.getById(id);
@@ -105,6 +121,14 @@ class VehicleRepositoryImpl implements VehicleRepository {
     String? fuelType,
     String? status,
     String? photoPath,
+    double? tankCapacity,
+    DateTime? acquisitionDate,
+    int? purchaseValue,
+    int? currentEstimatedValue,
+    String? color,
+    String? vin,
+    String? vehicleType,
+    String? observations,
   }) async {
     try {
       final existing = await _dao.getById(id);
@@ -121,6 +145,15 @@ class VehicleRepositoryImpl implements VehicleRepository {
         fuelType: Value(fuelType ?? existing.fuelType),
         status: Value(status ?? existing.status),
         photoPath: Value(photoPath ?? existing.photoPath),
+        // Los campos nuevos se escriben con su valor exacto (null = limpiar):
+        tankCapacity: Value(tankCapacity),
+        acquisitionDate: Value(acquisitionDate),
+        purchaseValue: Value(purchaseValue),
+        currentEstimatedValue: Value(currentEstimatedValue),
+        color: Value(_cleanText(color)),
+        vin: Value(_cleanText(vin)),
+        vehicleType: Value(_cleanText(vehicleType)),
+        observations: Value(_cleanText(observations)),
         updatedAt: Value(DateTime.now()),
       );
       await _dao.updateVehicle(entry);
@@ -180,6 +213,20 @@ class VehicleRepositoryImpl implements VehicleRepository {
       isActive: row.isActive,
       createdAt: row.createdAt,
       updatedAt: row.updatedAt,
+      tankCapacity: row.tankCapacity,
+      acquisitionDate: row.acquisitionDate,
+      purchaseValue: row.purchaseValue,
+      currentEstimatedValue: row.currentEstimatedValue,
+      color: row.color,
+      vin: row.vin,
+      vehicleType: row.vehicleType,
+      observations: row.observations,
     );
+  }
+
+  /// Normaliza texto opcional: vacío o nulo se guardan como `null`.
+  static String? _cleanText(String? value) {
+    final trimmed = value?.trim() ?? '';
+    return trimmed.isEmpty ? null : trimmed;
   }
 }

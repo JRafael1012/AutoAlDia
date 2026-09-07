@@ -176,10 +176,10 @@ El almacenamiento local se estructura en cuatro niveles complementarios:
 
 ### 3. Preferencias de Configuración (shared_preferences):
 - Datos no sensibles de configuración de la app:
-  - ID del vehículo activo seleccionado.
   - Ajustes de notificaciones locales (días de anticipación: 60, 30, 15, 7, 1 días).
   - Unidades de medida (km vs mi, galones vs litros).
   - Moneda preferida (`COP`, `USD`, etc.).
+- El **vehículo activo** no vive aquí: se persiste en la columna `is_active` de la tabla `vehicles` (fuente única de verdad, consistente con Drift).
 
 ### 4. Almacenamiento de Archivos Físicos (`LocalStorageService` + path_provider):
 - **Estructura en el almacenamiento interno del dispositivo (`app_documents/`):**

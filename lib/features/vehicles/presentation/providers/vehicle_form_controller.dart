@@ -45,6 +45,15 @@ class VehicleFormController extends _$VehicleFormController {
       plate: vehicle.plate ?? '',
       odometerKm: _formatOdometer(vehicle.odometerKm),
       fuelType: vehicle.fuelType,
+      tankCapacity: vehicle.tankCapacity?.toString() ?? '',
+      acquisitionDate:
+          vehicle.acquisitionDate == null ? '' : _formatDate(vehicle.acquisitionDate!),
+      purchaseValue: vehicle.purchaseValue?.toString() ?? '',
+      currentEstimatedValue: vehicle.currentEstimatedValue?.toString() ?? '',
+      color: vehicle.color ?? '',
+      vin: vehicle.vin ?? '',
+      vehicleType: vehicle.vehicleType ?? '',
+      observations: vehicle.observations ?? '',
       existingPhotoPath: vehicle.photoPath,
     );
   }
@@ -61,6 +70,22 @@ class VehicleFormController extends _$VehicleFormController {
       state = state.copyWith(odometerKm: value, errorMessage: null);
   void setFuelType(String value) =>
       state = state.copyWith(fuelType: value, errorMessage: null);
+  void setTankCapacity(String value) =>
+      state = state.copyWith(tankCapacity: value, errorMessage: null);
+  void setAcquisitionDate(String value) =>
+      state = state.copyWith(acquisitionDate: value, errorMessage: null);
+  void setPurchaseValue(String value) =>
+      state = state.copyWith(purchaseValue: value, errorMessage: null);
+  void setCurrentEstimatedValue(String value) =>
+      state = state.copyWith(currentEstimatedValue: value, errorMessage: null);
+  void setColor(String value) =>
+      state = state.copyWith(color: value, errorMessage: null);
+  void setVin(String value) =>
+      state = state.copyWith(vin: value, errorMessage: null);
+  void setVehicleType(String value) =>
+      state = state.copyWith(vehicleType: value, errorMessage: null);
+  void setObservations(String value) =>
+      state = state.copyWith(observations: value, errorMessage: null);
 
   /// Guarda el path de la foto recién seleccionada con `image_picker`.
   void setSelectedImagePath(String? path) =>
@@ -78,12 +103,29 @@ class VehicleFormController extends _$VehicleFormController {
     final plateError = _validator.validatePlate(state.plate);
     final odometerError = _validator.validateOdometer(state.odometerKm);
     final fuelError = _validator.validateFuelType(state.fuelType);
+    final tankCapacityError = _validator.validateTankCapacity(state.tankCapacity);
+    final acquisitionDateError = _validator.validateAcquisitionDate(state.acquisitionDate);
+    final purchaseValueError = _validator.validatePurchaseValue(state.purchaseValue);
+    final currentValueError =
+        _validator.validateCurrentEstimatedValue(state.currentEstimatedValue);
+    final colorError = _validator.validateColor(state.color);
+    final vinError = _validator.validateVin(state.vin);
+    final vehicleTypeError = _validator.validateVehicleType(state.vehicleType);
+    final observationsError = _validator.validateObservations(state.observations);
     return brandError ??
         modelError ??
         yearError ??
         plateError ??
         odometerError ??
-        fuelError;
+        fuelError ??
+        tankCapacityError ??
+        acquisitionDateError ??
+        purchaseValueError ??
+        currentValueError ??
+        colorError ??
+        vinError ??
+        vehicleTypeError ??
+        observationsError;
   }
 
   /// Valida la regla de placa única por usuario antes de guardar.
@@ -133,6 +175,17 @@ class VehicleFormController extends _$VehicleFormController {
       final year = yearTxt.isEmpty ? null : int.parse(yearTxt);
       final plate = state.plate.trim().isEmpty ? null : state.plate.trim();
 
+      // Datos adicionales (opcionales): vacío → null.
+      final tankCapacity = state.tankCapacity.trim().isEmpty
+          ? null
+          : double.parse(state.tankCapacity.trim());
+      final acquisitionDate = _parseDate(state.acquisitionDate);
+      final purchaseValue =
+          state.purchaseValue.trim().isEmpty ? null : int.parse(state.purchaseValue.trim());
+      final currentEstimatedValue = state.currentEstimatedValue.trim().isEmpty
+          ? null
+          : int.parse(state.currentEstimatedValue.trim());
+
       VehicleProfile saved;
       if (id == null) {
         // 1. Crear el vehículo (el primero queda activo automáticamente).
@@ -144,6 +197,14 @@ class VehicleFormController extends _$VehicleFormController {
           fuelType: state.fuelType,
           year: year,
           plate: plate,
+          tankCapacity: tankCapacity,
+          acquisitionDate: acquisitionDate,
+          purchaseValue: purchaseValue,
+          currentEstimatedValue: currentEstimatedValue,
+          color: state.color,
+          vin: state.vin,
+          vehicleType: state.vehicleType,
+          observations: state.observations,
         );
       } else {
         saved = await repo.update(
@@ -154,19 +215,41 @@ class VehicleFormController extends _$VehicleFormController {
           plate: plate,
           odometerKm: odometer,
           fuelType: state.fuelType,
+          tankCapacity: tankCapacity,
+          acquisitionDate: acquisitionDate,
+          purchaseValue: purchaseValue,
+          currentEstimatedValue: currentEstimatedValue,
+          color: state.color,
+          vin: state.vin,
+          vehicleType: state.vehicleType,
+          observations: state.observations,
         );
       }
 
       // 2. Persistir la foto nueva si se seleccionó una, o limpiar si se quitó.
+      //    Se guarda la RUTA RELATIVA (vehicles/{id}/photos/...) y la absoluta
+      //    se reconstruye en tiempo de ejecución (ver LocalStorageService).
       final newPhoto = state.selectedImagePath;
-      final removedExisting = state.existingPhotoPath?.isEmpty ?? false;
+      final removedExisting = state.existingPhotoPath == '';
+
       if (newPhoto != null && newPhoto.isNotEmpty) {
-        final file = await storage.saveVehiclePhoto(
+        // M4: eliminar la foto anterior antes de guardar la nueva para no
+        // dejar archivos huérfanos al reemplazarla.
+        if (state.existingPhotoPath?.isNotEmpty ?? false) {
+          await ref
+              .read(localStorageServiceProvider)
+              .deleteRelativeFile(state.existingPhotoPath!);
+        }
+        final relativePath = await storage.saveVehiclePhoto(
           vehicleId: saved.id,
           sourceFile: File(newPhoto),
         );
-        saved = await repo.update(id: saved.id, photoPath: file.path);
+        saved = await repo.update(id: saved.id, photoPath: relativePath);
       } else if (removedExisting && (saved.photoPath?.isNotEmpty ?? false)) {
+        // M4: al quitar la foto, eliminar también el archivo físico.
+        await ref
+            .read(localStorageServiceProvider)
+            .deleteRelativeFile(saved.photoPath!);
         saved = await repo.update(id: saved.id, photoPath: '');
       }
 
@@ -182,6 +265,16 @@ class VehicleFormController extends _$VehicleFormController {
         plate: saved.plate ?? '',
         odometerKm: _formatOdometer(saved.odometerKm),
         fuelType: saved.fuelType,
+        tankCapacity: saved.tankCapacity?.toString() ?? '',
+        acquisitionDate: saved.acquisitionDate == null
+            ? ''
+            : _formatDate(saved.acquisitionDate!),
+        purchaseValue: saved.purchaseValue?.toString() ?? '',
+        currentEstimatedValue: saved.currentEstimatedValue?.toString() ?? '',
+        color: saved.color ?? '',
+        vin: saved.vin ?? '',
+        vehicleType: saved.vehicleType ?? '',
+        observations: saved.observations ?? '',
         existingPhotoPath: saved.photoPath,
         submitting: false,
         completed: true,
@@ -203,5 +296,18 @@ class VehicleFormController extends _$VehicleFormController {
     return value == value.roundToDouble()
         ? value.toStringAsFixed(0)
         : value.toString();
+  }
+
+  /// Formatea una fecha como `yyyy-MM-dd` para usar en campos de texto.
+  static String _formatDate(DateTime date) {
+    final m = date.month.toString().padLeft(2, '0');
+    final d = date.day.toString().padLeft(2, '0');
+    return '${date.year}-$m-$d';
+  }
+
+  /// Parsea `yyyy-MM-dd` (o cualquier formato soportado) a [DateTime].
+  static DateTime? _parseDate(String value) {
+    final v = value.trim();
+    return v.isEmpty ? null : DateTime.tryParse(v);
   }
 }

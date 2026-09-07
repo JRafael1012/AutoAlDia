@@ -6,7 +6,7 @@ import 'package:autoaldia/core/storage/local_storage_service.dart';
 import 'package:autoaldia/core/storage/storage_providers.dart';
 import 'package:autoaldia/features/vehicles/presentation/providers/vehicle_form_controller.dart';
 import 'package:autoaldia/features/vehicles/presentation/providers/vehicle_providers.dart';
-import 'package:drift/drift.dart';
+import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -198,11 +198,133 @@ void main() {
 
       await container
           .read(vehiclesListControllerProvider.notifier)
-          .deleteVehicle(created.id);
+          .deleteVehicle(created);
 
       final list =
           await container.read(vehiclesListControllerProvider.future);
       expect(list, isEmpty);
+    });
+
+    test('guarda y conserva los datos adicionales del vehículo', () async {
+      await crearPerfilUsuario();
+
+      final form = container.read(vehicleFormControllerProvider.notifier);
+      form.startCreate();
+      form.setBrand('BMW');
+      form.setModel('320i');
+      form.setOdometer('50000');
+      form.setFuelType('gasolina');
+      form.setTankCapacity('45.5');
+      form.setAcquisitionDate('2023-05-01');
+      form.setPurchaseValue('120000000');
+      form.setCurrentEstimatedValue('110000000');
+      form.setColor('Azul');
+      form.setVin('WBA3A5C50K0142567');
+      form.setVehicleType('carro');
+      form.setObservations('Comprado de agencia');
+      expect(await form.save(), isTrue);
+
+      final created = (await container
+              .read(vehiclesListControllerProvider.future))
+          .first;
+      expect(created.tankCapacity, 45.5);
+      expect(created.acquisitionDate, DateTime(2023, 5, 1));
+      expect(created.purchaseValue, 120000000);
+      expect(created.currentEstimatedValue, 110000000);
+      expect(created.color, 'Azul');
+      expect(created.vin, 'WBA3A5C50K0142567');
+      expect(created.vehicleType, 'carro');
+      expect(created.observations, 'Comprado de agencia');
+
+      // Al editar y guardar sin tocar los campos opcionales se conservan.
+      form.startEdit(created);
+      form.setOdometer('51000');
+      expect(await form.save(), isTrue);
+      final updated = (await container
+              .read(vehiclesListControllerProvider.future))
+          .first;
+      expect(updated.tankCapacity, 45.5);
+      expect(updated.color, 'Azul');
+      expect(updated.vin, 'WBA3A5C50K0142567');
+    });
+
+    test('persiste la foto como ruta relativa y la resuelve al eliminar',
+        () async {
+      await crearPerfilUsuario();
+
+      final form = container.read(vehicleFormControllerProvider.notifier);
+      form.startCreate();
+      form.setBrand('Toyota');
+      form.setModel('Corolla');
+      form.setOdometer('10000');
+      form.setFuelType('gasolina');
+
+      final sourcePhoto = File(
+        '${tempDir.path}${Platform.pathSeparator}source_photo.jpg',
+      );
+      await sourcePhoto.writeAsString('fake-photo-bytes');
+      form.setSelectedImagePath(sourcePhoto.path);
+
+      expect(await form.save(), isTrue);
+
+      final created = (await container
+              .read(vehiclesListControllerProvider.future))
+          .first;
+      expect(created.photoPath, isNotNull);
+      expect(created.photoPath!.contains('vehicles'), isTrue);
+      expect(created.photoPath!.startsWith(tempDir.path), isFalse);
+
+      // La ruta relativa se resuelve a un archivo existente.
+      final saved = await storageService
+          .resolveRelativeFile(created.photoPath!);
+      expect(await saved.exists(), isTrue);
+
+      // Al borrar el vehículo, el archivo físico desaparece.
+      await container
+          .read(vehiclesListControllerProvider.notifier)
+          .deleteVehicle(created);
+      expect(await saved.exists(), isFalse);
+    });
+
+    test('al eliminar el vehículo activo promueve el más reciente (M8)',
+        () async {
+      await crearPerfilUsuario();
+
+      final form = container.read(vehicleFormControllerProvider.notifier);
+
+      form.startCreate();
+      form.setBrand('Toyota');
+      form.setModel('Corolla');
+      form.setOdometer('10000');
+      form.setFuelType('gasolina');
+      expect(await form.save(), isTrue);
+
+      form.startCreate();
+      form.setBrand('Mazda');
+      form.setModel('3');
+      form.setOdometer('20000');
+      form.setFuelType('diesel');
+      expect(await form.save(), isTrue);
+
+      // El primero quedó activo; lo eliminamos.
+      final list =
+          await container.read(vehiclesListControllerProvider.future);
+      final corolla = list.firstWhere((v) => v.brand == 'Toyota');
+      expect(corolla.isActive, isTrue);
+
+      await container
+          .read(vehiclesListControllerProvider.notifier)
+          .deleteVehicle(corolla);
+
+      final remaining =
+          await container.read(vehiclesListControllerProvider.future);
+      expect(remaining.length, 1);
+      expect(remaining.single.brand, 'Mazda');
+      expect(remaining.single.isActive, isTrue);
+
+      final active =
+          await container.read(activeVehicleControllerProvider.future);
+      expect(active?.id, remaining.single.id);
     });
   });
 }
