@@ -14,6 +14,11 @@ abstract interface class VehicleRepository {
   /// Devuelve un vehículo por su ID.
   Future<VehicleProfile?> getById(int id);
 
+  /// Devuelve un vehículo por placa dentro del mismo usuario, o `null` si no existe.
+  ///
+  /// Útil para validar la regla de placa única por usuario antes de guardar.
+  Future<VehicleProfile?> findByPlate(int userId, String plate);
+
   /// Crea un vehículo nuevo. El primer vehículo se marca automáticamente
   /// como activo.
   Future<VehicleProfile> create({

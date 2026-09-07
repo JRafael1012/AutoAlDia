@@ -44,6 +44,17 @@ class VehicleRepositoryImpl implements VehicleRepository {
   }
 
   @override
+  Future<VehicleProfile?> findByPlate(int userId, String plate) async {
+    try {
+      if (plate.trim().isEmpty) return null;
+      final row = await _dao.getByPlate(userId, plate);
+      return row == null ? null : _toProfile(row);
+    } catch (e) {
+      throw const DatabaseFailure('No se pudo verificar la placa.');
+    }
+  }
+
+  @override
   Future<VehicleProfile> create({
     required int userId,
     required String brand,

@@ -10,6 +10,8 @@
 	<string>AutoAlDía</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>AutoAlDía usa Face ID para desbloquear la aplicación de forma segura.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>AutoAlDía accede a tu galería para elegir una foto de tu vehículo.</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

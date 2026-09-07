@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/database/app_database_provider.dart';
+import '../../../../core/storage/storage_providers.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
 import '../../data/vehicle_repository_impl.dart';
 import '../../domain/models/vehicle_profile.dart';
@@ -31,6 +32,15 @@ class VehiclesListController extends _$VehiclesListController {
       if (user == null) return [];
       return ref.read(vehicleRepositoryProvider).getAll(user.id);
     });
+  }
+
+  /// Elimina un vehículo de la base de datos y limpia sus archivos físicos.
+  Future<void> deleteVehicle(int vehicleId) async {
+    await ref.read(vehicleRepositoryProvider).delete(vehicleId);
+    await ref.read(localStorageServiceProvider).deleteVehicleDirectory(vehicleId);
+    // Limpiar el vehículo activo en memoria si se eliminó el que estaba activo.
+    ref.invalidate(activeVehicleControllerProvider);
+    await reload();
   }
 }
 

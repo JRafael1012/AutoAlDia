@@ -5,6 +5,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../features/auth/presentation/providers/auth_providers.dart';
 import '../../features/auth/presentation/screens/pin_lock_screen.dart';
 import '../../features/auth/presentation/screens/profile_setup_screen.dart';
+import '../../features/vehicles/presentation/screens/vehicle_form_screen.dart';
+import '../../features/vehicles/presentation/screens/vehicles_list_screen.dart';
 import '../../shared/widgets/feature_placeholder_screen.dart';
 import 'app_routes.dart';
 import 'main_shell_scaffold.dart';
@@ -106,12 +108,7 @@ GoRouter goRouter(Ref ref) {
             routes: [
               GoRoute(
                 path: AppRoutes.vehicles,
-                builder: (context, state) => const FeaturePlaceholderScreen(
-                  title: 'Mis Vehículos',
-                  icon: Icons.directions_car,
-                  description:
-                      'Administración del garaje, selector de vehículo activo y registro.',
-                ),
+                builder: (context, state) => const VehiclesListScreen(),
               ),
             ],
           ),
@@ -164,6 +161,18 @@ GoRouter goRouter(Ref ref) {
       ),
 
       // Rutas secundarias (navegación completa sin barra inferior)
+      GoRoute(
+        path: AppRoutes.vehicleNew,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const VehicleFormScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.vehicleEdit,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => VehicleFormScreen(
+          vehicleId: int.tryParse(state.pathParameters['id'] ?? ''),
+        ),
+      ),
       GoRoute(
         path: AppRoutes.documents,
         parentNavigatorKey: _rootNavigatorKey,

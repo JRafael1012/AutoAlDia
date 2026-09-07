@@ -11,6 +11,10 @@ abstract class AppRoutes {
   static const String maintenance = '/maintenance';
   static const String expenses = '/expenses';
 
+  // Sub-rutas de vehículos (navegación completa sobre el Shell)
+  static const String vehicleNew = '/vehicles/new';
+  static const String vehicleEdit = '/vehicles/:id/edit';
+
   // Rutas secundarias / utilitarias
   static const String documents = '/documents';
   static const String alerts = '/alerts';

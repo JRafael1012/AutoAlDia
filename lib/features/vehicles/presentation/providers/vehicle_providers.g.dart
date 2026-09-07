@@ -90,7 +90,7 @@ final class VehiclesListControllerProvider
 }
 
 String _$vehiclesListControllerHash() =>
-    r'3741b0f7e14c00b85a14e1f4dce2ddbf9a4c9c65';
+    r'ab6f15d948f4f3c0b2fcae5b4823f1d67b876205';
 
 /// Lista de vehículos asociados al usuario actual.
 

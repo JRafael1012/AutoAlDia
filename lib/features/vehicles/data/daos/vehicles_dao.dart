@@ -28,6 +28,16 @@ class VehiclesDao extends DatabaseAccessor<AppDatabase> with _$VehiclesDaoMixin 
         .getSingleOrNull();
   }
 
+  /// Busca un vehículo por placa dentro del mismo usuario (placa única por usuario).
+  Future<Vehicle?> getByPlate(int userId, String plate) {
+    return (select(vehicles)
+          ..where(
+            (v) => v.userId.equals(userId) & v.plate.equals(plate.trim()),
+          )
+          ..limit(1))
+        .getSingleOrNull();
+  }
+
   /// true si el usuario tiene al menos un vehículo registrado.
   Future<bool> hasAny(int userId) {
     return (select(vehicles)..where((v) => v.userId.equals(userId)))
