@@ -7,7 +7,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Autoaldia</string>
+	<string>AutoAlDía</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>AutoAlDía usa Face ID para desbloquear la aplicación de forma segura.</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
